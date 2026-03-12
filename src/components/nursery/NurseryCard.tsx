@@ -1,0 +1,118 @@
+"use client";
+
+import Link from "next/link";
+import type { NurseryWithDistance, TransportMode } from "@/lib/data/types";
+import AvailabilityBadge from "./AvailabilityBadge";
+
+interface NurseryCardProps {
+  nursery: NurseryWithDistance;
+  rank: number;
+  municipalityId: string;
+  transportMode: TransportMode;
+}
+
+const typeColors: Record<string, string> = {
+  "認可保育所": "bg-blue-100 text-blue-700",
+  "認定こども園": "bg-purple-100 text-purple-700",
+  "小規模保育": "bg-orange-100 text-orange-700",
+  "事業所内保育": "bg-teal-100 text-teal-700",
+};
+
+const transportIcons: Record<TransportMode, string> = {
+  walk: "🚶",
+  bike: "🚲",
+  car: "🚗",
+};
+
+export default function NurseryCard({
+  nursery,
+  rank,
+  municipalityId,
+  transportMode,
+}: NurseryCardProps) {
+  const minutes =
+    transportMode === "walk"
+      ? nursery.walk_minutes
+      : transportMode === "bike"
+        ? nursery.bike_minutes
+        : nursery.car_minutes;
+
+  const typeColor = typeColors[nursery.type] ?? "bg-gray-100 text-gray-700";
+
+  // 空き状況のサマリーを生成
+  const hasAvailability = Object.values(nursery.availability).some(
+    (v) => v === "○" || v === "△"
+  );
+
+  return (
+    <Link href={`/${municipalityId}/nurseries/${nursery.id}`}>
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        {/* 上段: ランク + 名前 + 移動時間 */}
+        <div className="flex items-start gap-3">
+          {/* ランクバッジ */}
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] text-white flex items-center justify-center text-sm font-bold">
+            {rank}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="font-bold text-[15px] text-gray-900 truncate">
+                {nursery.name}
+              </h3>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColor}`}>
+                {nursery.type}
+              </span>
+              <span className="text-xs text-gray-500">
+                {nursery.sub_area}
+              </span>
+            </div>
+          </div>
+
+          {/* 移動時間 */}
+          <div className="flex-shrink-0 text-right">
+            <div className="text-xs text-gray-500">
+              {transportIcons[transportMode]} {nursery.distance_text}
+            </div>
+            <div className="text-lg font-bold text-[#2d9e6b]">
+              {minutes}
+              <span className="text-xs font-normal text-gray-500 ml-0.5">分</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 下段: 空き状況 + 定員 */}
+        <div className="mt-3 flex items-center justify-between">
+          <div className="flex gap-1 flex-wrap">
+            {(["age_0", "age_1", "age_2"] as const).map((key) => {
+              const ageNum = key.replace("age_", "");
+              return (
+                <AvailabilityBadge
+                  key={key}
+                  status={nursery.availability[key]}
+                  ageLabel={`${ageNum}歳`}
+                />
+              );
+            })}
+          </div>
+          <div className="text-xs text-gray-400">
+            定員 {nursery.capacity}名
+            {nursery.current_enrollment > nursery.capacity && (
+              <span className="text-red-400 ml-1">
+                ({nursery.current_enrollment}名在籍)
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* 空きあり表示 */}
+        {hasAvailability && (
+          <div className="mt-2 text-xs font-medium text-green-600 bg-green-50 rounded-lg px-3 py-1.5 text-center">
+            空きあり（要確認）
+          </div>
+        )}
+      </div>
+    </Link>
+  );
+}

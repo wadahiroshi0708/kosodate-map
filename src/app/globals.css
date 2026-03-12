@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f9fc;
+  --foreground: #1a1a2e;
+  --primary: #4CAF82;
+  --primary-dark: #2d9e6b;
+  --primary-darker: #1a7a52;
+  --primary-light: #f0faf5;
+  --primary-border: #c8ead8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Leaflet CSS Override */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

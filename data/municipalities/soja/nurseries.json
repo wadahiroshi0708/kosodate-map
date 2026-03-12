@@ -1,0 +1,686 @@
+[
+  {
+    "id": "chuo-hoikusho",
+    "municipality_id": "soja",
+    "name": "中央保育所",
+    "type": "認可保育所",
+    "sub_area": "駅南",
+    "address": "岡山県総社市駅南一丁目8-1",
+    "tel": null,
+    "capacity": 120,
+    "current_enrollment": 127,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.668084,
+      "lng": 133.740089
+    },
+    "geocoded": true,
+    "notes": "市立保育所。利用人数が定員超過（127/120）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "hikari-hoikuen",
+    "municipality_id": "soja",
+    "name": "ひかり保育園",
+    "type": "認可保育所",
+    "sub_area": "上林",
+    "address": "岡山県総社市上林763-2",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 121,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.66757,
+      "lng": 133.779609
+    },
+    "geocoded": true,
+    "notes": "0歳児のみ1〜3名の空きあり。利用人数が定員超過（121/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "daini-hikari-hoikuen",
+    "municipality_id": "soja",
+    "name": "第二ひかり保育園",
+    "type": "認可保育所",
+    "sub_area": "真壁",
+    "address": "岡山県総社市真壁162-1",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 119,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.669502,
+      "lng": 133.757508
+    },
+    "geocoded": true,
+    "notes": "0歳児のみ1〜3名の空きあり。ひかり保育園系列。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "daisan-hikari-hoikuen",
+    "municipality_id": "soja",
+    "name": "第三ひかり保育園",
+    "type": "認可保育所",
+    "sub_area": "三輪",
+    "address": "岡山県総社市三輪1102-1",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 109,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.665872,
+      "lng": 133.746419
+    },
+    "geocoded": true,
+    "notes": "0歳児のみ1〜3名の空きあり。ひかり保育園系列。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "sumire-hoikuen",
+    "municipality_id": "soja",
+    "name": "すみれ保育園",
+    "type": "認可保育所",
+    "sub_area": "井手",
+    "address": "岡山県総社市井手979-1",
+    "tel": null,
+    "capacity": 100,
+    "current_enrollment": 106,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.678378,
+      "lng": 133.766947
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（106/100）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "suzuran-hoikuen",
+    "municipality_id": "soja",
+    "name": "すずらん保育園",
+    "type": "認可保育所",
+    "sub_area": "秦",
+    "address": "岡山県総社市秦2947",
+    "tel": null,
+    "capacity": 60,
+    "current_enrollment": 74,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.688894,
+      "lng": 133.710123
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（74/60）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "daini-suzuran-hoikuen",
+    "municipality_id": "soja",
+    "name": "第二すずらん保育園",
+    "type": "認可保育所",
+    "sub_area": "秦",
+    "address": "岡山県総社市秦380-2",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 108,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.676141,
+      "lng": 133.70683
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。すずらん保育園系列。利用人数が定員超過（108/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "midori-hoikuen",
+    "municipality_id": "soja",
+    "name": "みどり保育園",
+    "type": "認可保育所",
+    "sub_area": "総社",
+    "address": "岡山県総社市総社1295-14",
+    "tel": null,
+    "capacity": 120,
+    "current_enrollment": 119,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.681892,
+      "lng": 133.759718
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。定員近傍（119/120）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "anone-hoikuen",
+    "municipality_id": "soja",
+    "name": "あのね保育園",
+    "type": "認可保育所",
+    "sub_area": "駅南",
+    "address": "岡山県総社市駅南一丁目12-5",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 109,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.668781,
+      "lng": 133.737965
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（109/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "smile-hoikuen",
+    "municipality_id": "soja",
+    "name": "スマイル保育園",
+    "type": "認可保育所",
+    "sub_area": "小寺",
+    "address": "岡山県総社市小寺487",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 105,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.684837,
+      "lng": 133.747913
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（105/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "taiyo-hoikuen",
+    "municipality_id": "soja",
+    "name": "太陽保育園",
+    "type": "認可保育所",
+    "sub_area": "南溝手",
+    "address": "岡山県総社市南溝手277-1",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 115,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.684295,
+      "lng": 133.779255
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。全面芝生の園庭・農園あり。利用人数が定員超過（115/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "daini-taiyo-hoikuen",
+    "municipality_id": "soja",
+    "name": "第二太陽保育園",
+    "type": "認可保育所",
+    "sub_area": "井手",
+    "address": "岡山県総社市井手438",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 115,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.674331,
+      "lng": 133.762813
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。太陽保育園系列。利用人数が定員超過（115/90）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "ijirino-kodomoen",
+    "municipality_id": "soja",
+    "name": "いじりの認定こども園",
+    "type": "認定こども園",
+    "sub_area": "井尻野",
+    "address": "岡山県総社市井尻野1722",
+    "tel": "0866-92-3655",
+    "capacity": 160,
+    "current_enrollment": 147,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.680131,
+      "lng": 133.736394
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。定員に余裕あり（147/160）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "kiyone-kodomoen",
+    "municipality_id": "soja",
+    "name": "きよね認定こども園",
+    "type": "認定こども園",
+    "sub_area": "清音軽部",
+    "address": "岡山県総社市清音軽部762",
+    "tel": "0866-94-0104",
+    "capacity": 160,
+    "current_enrollment": 161,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.650241,
+      "lng": 133.738149
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（161/160）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "yamate-kodomoen",
+    "municipality_id": "soja",
+    "name": "やまて認定こども園",
+    "type": "認定こども園",
+    "sub_area": "岡谷",
+    "address": "岡山県総社市岡谷543-1",
+    "tel": "0866-93-4858",
+    "capacity": 105,
+    "current_enrollment": 129,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": "×",
+      "age_4": "×",
+      "age_5": "×"
+    },
+    "location": {
+      "lat": 34.651914,
+      "lng": 133.773613
+    },
+    "geocoded": true,
+    "notes": "全年齢空きなし。利用人数が定員超過（129/105）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "sakura-hoikuen",
+    "municipality_id": "soja",
+    "name": "さくら保育園",
+    "type": "小規模保育",
+    "sub_area": "中央",
+    "address": "岡山県総社市中央6丁目8-109",
+    "tel": "0866-93-9739",
+    "capacity": 14,
+    "current_enrollment": 14,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.668026,
+      "lng": 133.748589
+    },
+    "geocoded": true,
+    "notes": "小規模保育（0〜2歳対象）。定員満杯（14/14）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "smile-nyujien",
+    "municipality_id": "soja",
+    "name": "スマイル乳児園",
+    "type": "小規模保育",
+    "sub_area": "門田",
+    "address": "岡山県総社市門田1214",
+    "tel": "0866-90-4188",
+    "capacity": 19,
+    "current_enrollment": 18,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.68006,
+      "lng": 133.746616
+    },
+    "geocoded": true,
+    "notes": "小規模保育（0〜2歳対象）。定員近傍（18/19）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "sereno-honobono-hoikuen",
+    "municipality_id": "soja",
+    "name": "セレーノほのぼの保育園",
+    "type": "事業所内保育",
+    "sub_area": "久代",
+    "address": "岡山県総社市久代5127",
+    "tel": "0866-96-0733",
+    "capacity": 19,
+    "current_enrollment": 22,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.677474,
+      "lng": 133.699249
+    },
+    "geocoded": true,
+    "notes": "事業所内保育（0〜2歳対象）。利用人数が定員超過（22/19）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  },
+  {
+    "id": "izumi-hoikuen",
+    "municipality_id": "soja",
+    "name": "いずみ保育園",
+    "type": "事業所内保育",
+    "sub_area": "小寺",
+    "address": "岡山県総社市小寺995-1",
+    "tel": "0866-93-1155",
+    "capacity": 12,
+    "current_enrollment": 17,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "×",
+      "age_1": "×",
+      "age_2": "×",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.687715,
+      "lng": 133.746387
+    },
+    "geocoded": true,
+    "notes": "事業所内保育（0〜2歳対象）。利用人数が定員超過（17/12）。",
+    "data_source": "令和7年度保育施設入所可能状況一覧",
+    "data_date": "2026-01-23",
+    "last_updated": "2026-03-12"
+  }
+]

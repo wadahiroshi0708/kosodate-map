@@ -1,0 +1,27 @@
+{
+  "id": "soja",
+  "name_ja": "総社市",
+  "name_en": "Soja",
+  "prefecture_ja": "岡山県",
+  "prefecture_en": "Okayama",
+  "center_lat": 34.6720,
+  "center_lng": 133.7467,
+  "default_zoom": 13,
+  "contact": {
+    "department": "教育委員会 こども夢づくり課",
+    "phone": "0866-92-8265"
+  },
+  "data_sources": [
+    {
+      "type": "nursery_availability",
+      "source_name": "令和7年度保育施設入所可能状況一覧",
+      "source_date": "2026-01-23",
+      "source_url": null
+    }
+  ],
+  "features_enabled": {
+    "nursery_map": true,
+    "clinic_search": false,
+    "gov_support": false
+  }
+}

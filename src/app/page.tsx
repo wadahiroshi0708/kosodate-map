@@ -1,65 +1,98 @@
-import Image from "next/image";
+import Link from "next/link";
+import { dataRepository } from "@/lib/data/json-adapter";
 
-export default function Home() {
+export default async function HomePage() {
+  const municipalities = await dataRepository.getMunicipalities();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-gradient-to-b from-[#f0faf5] to-[#f7f9fc]">
+      {/* ヒーロー */}
+      <div className="bg-gradient-to-br from-[#2d9e6b] to-[#1a7a52] text-white px-6 pt-16 pb-12">
+        <div className="max-w-lg mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl backdrop-blur-sm">
+              🗺
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold">
+                こそだて<span className="text-green-200">マップ</span>
+              </h1>
+              <p className="text-green-200 text-xs">
+                転居先の子育て情報をワンストップで
+              </p>
+            </div>
+          </div>
+
+          <p className="text-sm text-green-100 leading-relaxed">
+            引っ越し先で保育園を探すのは大変。
+            <br />
+            こそだてマップなら、自宅からの距離で保育園をランキング。
+            <br />
+            空き状況もひと目でわかります。
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      {/* エリア選択 */}
+      <div className="max-w-lg mx-auto px-4 -mt-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          <h2 className="text-base font-bold text-gray-900 mb-1">
+            エリアを選んでください
+          </h2>
+          <p className="text-xs text-gray-500 mb-4">
+            お住まいの自治体を選択すると、保育施設情報を確認できます
+          </p>
+
+          <div className="space-y-3">
+            {municipalities.map((m) => (
+              <Link
+                key={m.id}
+                href={`/${m.id}`}
+                className="block bg-gradient-to-r from-[#f0faf5] to-white border border-[#c8ead8] rounded-xl p-4 hover:shadow-md transition-all group"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">📍</span>
+                      <span className="font-bold text-gray-900 group-hover:text-[#2d9e6b] transition-colors">
+                        {m.prefecture_ja} {m.name_ja}
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1 ml-7">
+                      {m.features_enabled.nursery_map && "保育施設マップ"}
+                      {m.features_enabled.clinic_search && " ・ 医療機関検索"}
+                      {m.features_enabled.gov_support && " ・ 行政支援"}
+                    </div>
+                  </div>
+                  <span className="text-gray-400 group-hover:text-[#4CAF82] transition-colors text-xl">
+                    →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {municipalities.length === 0 && (
+            <div className="text-center text-gray-400 py-8">
+              準備中のエリアはありません
+            </div>
+          )}
         </div>
-      </main>
+
+        {/* 今後の展開 */}
+        <div className="mt-6 bg-white/80 rounded-xl p-4 text-center">
+          <p className="text-xs text-gray-400">
+            今後、対応エリアを順次拡大していきます
+          </p>
+        </div>
+      </div>
+
+      {/* フッター */}
+      <footer className="mt-12 pb-8 text-center">
+        <p className="text-xs text-gray-400">
+          &copy; 2026 こそだてマップ
+        </p>
+      </footer>
     </div>
   );
 }
