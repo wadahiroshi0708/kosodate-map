@@ -95,6 +95,42 @@ export interface NurseryWithDistance extends Nursery {
   car_minutes: number;
 }
 
+/** 医療機関の施設種別 */
+export type ClinicFacilityType = "クリニック" | "病院";
+
+/** 診療時間 */
+export interface ClinicHours {
+  weekday_morning: string | null;
+  weekday_afternoon: string | null;
+  saturday: string | null;
+  sunday: string | null;
+}
+
+/** 医療機関 */
+export interface Clinic {
+  id: string;
+  municipality_id: string;
+  name: string;
+  facility_type: ClinicFacilityType;
+  address: string;
+  tel: string | null;
+  departments: string[];
+  hours: ClinicHours;
+  closed: string | null;
+  notes: string | null;
+  location: Location | null;
+  geocoded: boolean;
+}
+
+/** 距離計算結果付きの医療機関（フロントエンド用） */
+export interface ClinicWithDistance extends Clinic {
+  distance_km: number;
+  distance_text: string;
+  walk_minutes: number;
+  bike_minutes: number;
+  car_minutes: number;
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

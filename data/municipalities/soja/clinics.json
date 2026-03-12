@@ -1,0 +1,796 @@
+[
+  {
+    "id": "asano-clinic",
+    "municipality_id": "soja",
+    "name": "あさのクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市中央２丁目３－５",
+    "tel": "0866-93-8808",
+    "departments": [
+      "内科",
+      "老年精神科"
+    ],
+    "hours": {
+      "weekday_morning": "08:45-12:00",
+      "weekday_afternoon": "14:45-17:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.673739,
+      "lng": 133.745998
+    },
+    "geocoded": true
+  },
+  {
+    "id": "taniko-naika",
+    "municipality_id": "soja",
+    "name": "谷向内科",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市井手１２０８－２",
+    "tel": "0866-94-8801",
+    "departments": [
+      "内科",
+      "呼吸器内科",
+      "皮膚科",
+      "アレルギー科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:30-18:30",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.679809,
+      "lng": 133.767715
+    },
+    "geocoded": true
+  },
+  {
+    "id": "oka-heart-clinic",
+    "municipality_id": "soja",
+    "name": "岡ハートクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市岡谷１７０",
+    "tel": "0866-93-3033",
+    "departments": [
+      "内科",
+      "循環器内科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:30",
+      "weekday_afternoon": "14:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.651914,
+      "lng": 133.773613
+    },
+    "geocoded": true
+  },
+  {
+    "id": "koura-seikei",
+    "municipality_id": "soja",
+    "name": "こうら整形外科",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市中央６丁目１０－１０３",
+    "tel": "0866-90-2020",
+    "departments": [
+      "整形外科",
+      "リウマチ科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:40-12:00",
+      "weekday_afternoon": "14:45-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "予約患者優先",
+    "location": {
+      "lat": 34.668026,
+      "lng": 133.748589
+    },
+    "geocoded": true
+  },
+  {
+    "id": "park-clinic",
+    "municipality_id": "soja",
+    "name": "パーク統合クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市駅前２－１７－１",
+    "tel": "0866-92-3661",
+    "departments": [
+      "内科",
+      "糖尿病内科",
+      "漢方内科",
+      "外科",
+      "心療内科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "14:30-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.671134,
+      "lng": 133.739816
+    },
+    "geocoded": true
+  },
+  {
+    "id": "nagano-hospital",
+    "municipality_id": "soja",
+    "name": "長野病院",
+    "facility_type": "病院",
+    "address": "岡山県総社市金井戸１５０－１",
+    "tel": "0866-92-2361",
+    "departments": [
+      "内科",
+      "外科",
+      "整形外科",
+      "形成外科",
+      "婦人科",
+      "リハビリテーション科",
+      "放射線科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "14:00-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.682909,
+      "lng": 133.768958
+    },
+    "geocoded": true
+  },
+  {
+    "id": "izumi-clinic",
+    "municipality_id": "soja",
+    "name": "泉クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市小寺９９５－１",
+    "tel": "0866-94-5050",
+    "departments": [
+      "内科",
+      "外科",
+      "整形外科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "14:00-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.687715,
+      "lng": 133.746387
+    },
+    "geocoded": true
+  },
+  {
+    "id": "sugi-clinic-kadota",
+    "municipality_id": "soja",
+    "name": "診療所ドクター杉生",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市門田３１５",
+    "tel": "0866-92-5771",
+    "departments": [
+      "内科",
+      "呼吸器内科",
+      "循環器内科",
+      "外科",
+      "脳神経外科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:00-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.679682,
+      "lng": 133.739974
+    },
+    "geocoded": true
+  },
+  {
+    "id": "sugimoto-clinic",
+    "municipality_id": "soja",
+    "name": "杉本クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市駅前２丁目１８－２１",
+    "tel": "0866-92-1000",
+    "departments": [
+      "内科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "16:30-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.670086,
+      "lng": 133.741089
+    },
+    "geocoded": true
+  },
+  {
+    "id": "tomono-naika",
+    "municipality_id": "soja",
+    "name": "友野内科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市富原３４４－１",
+    "tel": "0866-92-8822",
+    "departments": [
+      "内科",
+      "小児科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:30",
+      "weekday_afternoon": "15:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": "年末年始・お盆",
+    "notes": null,
+    "location": {
+      "lat": 34.670752,
+      "lng": 133.715413
+    },
+    "geocoded": true
+  },
+  {
+    "id": "matsuo-hifuka",
+    "municipality_id": "soja",
+    "name": "松尾皮膚科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市総社２－２３－１４",
+    "tel": "0866-93-3188",
+    "departments": [
+      "皮膚科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "14:00-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": "年末年始・お盆",
+    "notes": null,
+    "location": {
+      "lat": 34.677662,
+      "lng": 133.754479
+    },
+    "geocoded": true
+  },
+  {
+    "id": "yakushiji-hospital",
+    "municipality_id": "soja",
+    "name": "薬師寺慈恵病院",
+    "facility_type": "病院",
+    "address": "岡山県総社市総社１－１７－２５",
+    "tel": "0866-92-0146",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "外科",
+      "脳神経外科",
+      "整形外科",
+      "救急科",
+      "麻酔科"
+    ],
+    "hours": {
+      "weekday_morning": "08:00-11:30",
+      "weekday_afternoon": "13:00-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "JR吉備線東総社駅より徒歩2分",
+    "location": {
+      "lat": 34.676627,
+      "lng": 133.75038
+    },
+    "geocoded": true
+  },
+  {
+    "id": "yamamoto-iin",
+    "municipality_id": "soja",
+    "name": "やまもと医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市三輪６１８",
+    "tel": "0866-93-7773",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "15:00-18:00",
+      "saturday": "09:00-12:30",
+      "sunday": null
+    },
+    "closed": "木曜日午後・土曜日午後",
+    "notes": null,
+    "location": {
+      "lat": 34.661154,
+      "lng": 133.746302
+    },
+    "geocoded": true
+  },
+  {
+    "id": "sugi-clinic-misu",
+    "municipality_id": "soja",
+    "name": "杉生クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市三須１３４２",
+    "tel": "0866-92-0252",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:30-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.673324,
+      "lng": 133.767023
+    },
+    "geocoded": true
+  },
+  {
+    "id": "kiyone-clinic",
+    "municipality_id": "soja",
+    "name": "清音クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市清音三因６０６－１",
+    "tel": "0866-94-4111",
+    "departments": [
+      "内科",
+      "循環器内科",
+      "小児科",
+      "アレルギー科"
+    ],
+    "hours": {
+      "weekday_morning": "08:40-12:00",
+      "weekday_afternoon": "14:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.649169,
+      "lng": 133.75004
+    },
+    "geocoded": true
+  },
+  {
+    "id": "hattori-jibika",
+    "municipality_id": "soja",
+    "name": "服部耳鼻咽喉科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市井手１２０８－３",
+    "tel": "0866-94-8887",
+    "departments": [
+      "耳鼻いんこう科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:30",
+      "weekday_afternoon": "14:50-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.679627,
+      "lng": 133.767678
+    },
+    "geocoded": true
+  },
+  {
+    "id": "sakaegeka-clinic",
+    "municipality_id": "soja",
+    "name": "さかえ外科内科クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市真壁２１２",
+    "tel": "0866-93-8800",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "外科",
+      "整形外科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "14:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.671871,
+      "lng": 133.728359
+    },
+    "geocoded": true
+  },
+  {
+    "id": "fujii-clinic",
+    "municipality_id": "soja",
+    "name": "藤井クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市駅南二丁目１７－１",
+    "tel": "0866-31-7616",
+    "departments": [
+      "内科",
+      "整形外科",
+      "精神科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "13:00-17:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.66747,
+      "lng": 133.741604
+    },
+    "geocoded": true
+  },
+  {
+    "id": "sato-iin",
+    "municipality_id": "soja",
+    "name": "佐藤医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市清音上中島１１６－６",
+    "tel": "0866-93-1606",
+    "departments": [
+      "内科",
+      "循環器内科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "15:00-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.643686,
+      "lng": 133.730425
+    },
+    "geocoded": true
+  },
+  {
+    "id": "soja-mimi-hana-nodo",
+    "municipality_id": "soja",
+    "name": "総社みみ・はな・のどクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市総社２－２０－１０",
+    "tel": "0866-90-3387",
+    "departments": [
+      "耳鼻いんこう科",
+      "アレルギー科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:30",
+      "weekday_afternoon": "15:00-18:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "JR吉備線東総社駅より徒歩1分",
+    "location": {
+      "lat": 34.677273,
+      "lng": 133.75048
+    },
+    "geocoded": true
+  },
+  {
+    "id": "takasuki-kodomo-clinic",
+    "municipality_id": "soja",
+    "name": "高杉こどもクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市岡谷１２１－６",
+    "tel": "0866-94-8839",
+    "departments": [
+      "小児科",
+      "小児循環器内科",
+      "小児神経科",
+      "小児アレルギー科",
+      "児童精神科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "予防接種・乳児健診は予約制",
+    "location": {
+      "lat": 34.661513,
+      "lng": 133.770719
+    },
+    "geocoded": true
+  },
+  {
+    "id": "tanaka-jibika",
+    "municipality_id": "soja",
+    "name": "たなか耳鼻咽喉クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市中央３丁目１０－１０５",
+    "tel": "0866-92-9500",
+    "departments": [
+      "耳鼻いんこう科",
+      "アレルギー科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "15:30-18:30",
+      "saturday": "09:00-17:00",
+      "sunday": null
+    },
+    "closed": "木曜日（第1木曜のみ開院）",
+    "notes": null,
+    "location": {
+      "lat": 34.671667,
+      "lng": 133.748958
+    },
+    "geocoded": true
+  },
+  {
+    "id": "hirakawa-naika",
+    "municipality_id": "soja",
+    "name": "平川内科クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市久代４９６４－１",
+    "tel": "0866-96-2002",
+    "departments": [
+      "内科",
+      "糖尿病内科",
+      "消化器内科",
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.675791,
+      "lng": 133.699215
+    },
+    "geocoded": true
+  },
+  {
+    "id": "miyake-naika-shoni",
+    "municipality_id": "soja",
+    "name": "三宅内科小児科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市井手９１９",
+    "tel": "0866-93-8511",
+    "departments": [
+      "内科",
+      "小児科",
+      "リハビリテーション科",
+      "放射線科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "14:00-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "小児科は完全予約制",
+    "location": {
+      "lat": 34.679899,
+      "lng": 133.771223
+    },
+    "geocoded": true
+  },
+  {
+    "id": "miyashita-naika",
+    "municipality_id": "soja",
+    "name": "みやした内科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市真壁１２３１－１",
+    "tel": "0866-95-2860",
+    "departments": [
+      "内科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "15:00-20:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "夜間診療あり（18:00〜20:00）",
+    "location": {
+      "lat": 34.673248,
+      "lng": 133.730207
+    },
+    "geocoded": true
+  },
+  {
+    "id": "morishita-hospital",
+    "municipality_id": "soja",
+    "name": "森下病院",
+    "facility_type": "病院",
+    "address": "岡山県総社市駅前１－６－１",
+    "tel": "0866-92-0591",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "外科",
+      "整形外科",
+      "皮膚科",
+      "泌尿器科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:30-12:00",
+      "weekday_afternoon": "13:30-17:30",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": "JR総社駅より徒歩3分",
+    "location": {
+      "lat": 34.673903,
+      "lng": 133.739959
+    },
+    "geocoded": true
+  },
+  {
+    "id": "watanabe-iin",
+    "municipality_id": "soja",
+    "name": "渡辺医院",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市真壁１５１－５",
+    "tel": "0866-92-7222",
+    "departments": [
+      "内科",
+      "消化器内科",
+      "整形外科",
+      "放射線科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:00-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.669962,
+      "lng": 133.756609
+    },
+    "geocoded": true
+  },
+  {
+    "id": "kibiji-seikei",
+    "municipality_id": "soja",
+    "name": "きびじ整形外科・内科・リハビリクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市岡谷３３７－１",
+    "tel": "0866-93-1221",
+    "departments": [
+      "内科",
+      "整形外科",
+      "リハビリテーション科"
+    ],
+    "hours": {
+      "weekday_morning": "08:45-12:00",
+      "weekday_afternoon": "14:45-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.660447,
+      "lng": 133.775732
+    },
+    "geocoded": true
+  },
+  {
+    "id": "kibi-hifuka",
+    "municipality_id": "soja",
+    "name": "きび皮膚科形成外科クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市中央２－６－３６",
+    "tel": "0866-90-2007",
+    "departments": [
+      "皮膚科",
+      "形成外科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:30-17:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.673553,
+      "lng": 133.744118
+    },
+    "geocoded": true
+  },
+  {
+    "id": "kunitomi-clinic",
+    "municipality_id": "soja",
+    "name": "くにとみクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県総社市門田７８－１",
+    "tel": "0866-92-0255",
+    "departments": [
+      "内科",
+      "小児科",
+      "産婦人科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:45",
+      "weekday_afternoon": "14:00-18:45",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": null,
+    "notes": null,
+    "location": {
+      "lat": 34.67697,
+      "lng": 133.747483
+    },
+    "geocoded": true
+  }
+]

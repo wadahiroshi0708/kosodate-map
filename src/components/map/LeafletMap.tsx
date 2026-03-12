@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Nursery, Location } from "@/lib/data/types";
+import type { Nursery, Clinic, Location } from "@/lib/data/types";
 
 // Leafletはクライアントサイドのみでインポート
 let L: typeof import("leaflet") | null = null;
 
 interface LeafletMapProps {
   nurseries: Nursery[];
+  clinics?: Clinic[];
   center: { lat: number; lng: number };
   zoom: number;
   userLocation?: Location | null;
@@ -18,6 +19,7 @@ interface LeafletMapProps {
 
 export default function LeafletMap({
   nurseries,
+  clinics = [],
   center,
   zoom,
   userLocation,
@@ -101,6 +103,42 @@ export default function LeafletMap({
         });
       });
 
+      // 医療機関マーカー
+      clinics.forEach((clinic) => {
+        if (!clinic.location) return;
+
+        const icon = L!.divIcon({
+          className: "custom-marker",
+          html: `<div style="
+            width: 28px;
+            height: 28px;
+            background: #e05a2b;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+          ">${clinic.facility_type === "病院" ? "病" : "医"}</div>`,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+        });
+
+        const depts = clinic.departments.slice(0, 3).join("・");
+        L!.marker([clinic.location.lat, clinic.location.lng], { icon })
+          .addTo(map)
+          .bindPopup(
+            `<div style="font-family: -apple-system, sans-serif; min-width: 140px;">
+              <strong style="font-size: 13px;">${clinic.name}</strong>
+              <div style="font-size: 11px; color: #666; margin-top: 4px;">${depts}</div>
+              ${clinic.tel ? `<div style="font-size: 11px; margin-top: 4px;">📞 ${clinic.tel}</div>` : ""}
+            </div>`
+          );
+      });
+
       // ユーザー位置マーカー
       if (userLocation) {
         const homeIcon = L.divIcon({
@@ -140,7 +178,7 @@ export default function LeafletMap({
         mapInstanceRef.current = null;
       }
     };
-  }, [center, zoom, nurseries, userLocation, selectedNurseryId, onNurseryClick]);
+  }, [center, zoom, nurseries, clinics, userLocation, selectedNurseryId, onNurseryClick]);
 
   return (
     <div

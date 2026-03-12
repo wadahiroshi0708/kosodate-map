@@ -16,12 +16,16 @@ export default async function MunicipalityPage({
     notFound();
   }
 
-  const nurseries = await dataRepository.getNurseries(municipalityId);
+  const [nurseries, clinics] = await Promise.all([
+    dataRepository.getNurseries(municipalityId),
+    dataRepository.getClinics(municipalityId),
+  ]);
 
   return (
     <MunicipalityHome
       municipality={municipality}
       nurseries={nurseries}
+      clinics={clinics}
     />
   );
 }

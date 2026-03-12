@@ -6,6 +6,8 @@ import type {
   Location,
   Nursery,
   NurseryWithDistance,
+  Clinic,
+  ClinicWithDistance,
   TransportMode,
   TRANSPORT_SPEEDS,
 } from "../data/types";
@@ -60,6 +62,29 @@ export function formatDistance(km: number): string {
     return `${Math.round(km * 1000)}m`;
   }
   return `${km.toFixed(1)}km`;
+}
+
+/**
+ * 医療機関リストに距離情報を付与してソート
+ */
+export function rankClinicsByDistance(
+  clinics: Clinic[],
+  userLocation: Location
+): ClinicWithDistance[] {
+  return clinics
+    .filter((c) => c.location !== null)
+    .map((clinic) => {
+      const distance_km = calculateDistance(userLocation, clinic.location!);
+      return {
+        ...clinic,
+        distance_km,
+        distance_text: formatDistance(distance_km),
+        walk_minutes: estimateMinutes(distance_km, "walk"),
+        bike_minutes: estimateMinutes(distance_km, "bike"),
+        car_minutes: estimateMinutes(distance_km, "car"),
+      };
+    })
+    .sort((a, b) => a.distance_km - b.distance_km);
 }
 
 /**

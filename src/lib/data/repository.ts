@@ -4,7 +4,7 @@
 // Phase 2: Supabaseに切り替え可能
 // ===================================
 
-import type { Municipality, Nursery } from "./types";
+import type { Municipality, Nursery, Clinic } from "./types";
 
 export interface DataRepository {
   /** 全自治体の一覧を取得 */
@@ -21,6 +21,12 @@ export interface DataRepository {
     municipalityId: string,
     nurseryId: string
   ): Promise<Nursery | null>;
+
+  /** 指定自治体の医療機関一覧を取得 */
+  getClinics(municipalityId: string): Promise<Clinic[]>;
+
+  /** 指定自治体の指定IDの医療機関を取得 */
+  getClinic(municipalityId: string, clinicId: string): Promise<Clinic | null>;
 
   /** 自治体IDが存在するか確認 */
   municipalityExists(id: string): Promise<boolean>;
