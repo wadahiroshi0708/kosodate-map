@@ -21,6 +21,9 @@ const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
 
 type TabType = "nursery" | "clinic";
 
+// 子育て世代に重要な診療科（フィルターで優先表示）
+const FILTER_PRIORITY_DEPTS = ["小児科", "耳鼻いんこう科", "皮膚科", "産婦人科", "内科", "整形外科"];
+
 interface MunicipalityHomeProps {
   municipality: Municipality;
   nurseries: Nursery[];
@@ -36,11 +39,29 @@ export default function MunicipalityHome({
   const [transportMode, setTransportMode] = useState<TransportMode>("bike");
   const [selectedNurseryId, setSelectedNurseryId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("nursery");
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
 
   const defaultCenter: Location = {
     lat: municipality.center_lat,
     lng: municipality.center_lng,
   };
+
+  // 利用可能な診療科一覧（優先科目を先頭に）
+  const availableDepartments = useMemo(() => {
+    const allDepts = new Set<string>();
+    clinics.forEach((c) => c.departments.forEach((d) => allDepts.add(d)));
+    const priority = FILTER_PRIORITY_DEPTS.filter((d) => allDepts.has(d));
+    const others = [...allDepts]
+      .filter((d) => !FILTER_PRIORITY_DEPTS.includes(d))
+      .sort();
+    return [...priority, ...others];
+  }, [clinics]);
+
+  // 診療科フィルター適用後のクリニック一覧
+  const filteredClinics = useMemo(() => {
+    if (!selectedDepartment) return clinics;
+    return clinics.filter((c) => c.departments.includes(selectedDepartment));
+  }, [clinics, selectedDepartment]);
 
   const rankedNurseries = useMemo(() => {
     if (!userLocation) return null;
@@ -49,11 +70,16 @@ export default function MunicipalityHome({
 
   const rankedClinics = useMemo(() => {
     if (!userLocation) return null;
-    return rankClinicsByDistance(clinics, userLocation);
-  }, [clinics, userLocation]);
+    return rankClinicsByDistance(filteredClinics, userLocation);
+  }, [filteredClinics, userLocation]);
 
   const handleLocationSet = useCallback((location: Location) => {
     setUserLocation(location);
+  }, []);
+
+  const handleTabChange = useCallback((tab: TabType) => {
+    setActiveTab(tab);
+    if (tab === "nursery") setSelectedDepartment(null);
   }, []);
 
   const dataDate = nurseries[0]?.data_date ?? "不明";
@@ -74,7 +100,7 @@ export default function MunicipalityHome({
       {/* タブ切り替え */}
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
         <button
-          onClick={() => setActiveTab("nursery")}
+          onClick={() => handleTabChange("nursery")}
           className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
             activeTab === "nursery"
               ? "bg-white text-[#2d9e6b] shadow-sm"
@@ -84,7 +110,7 @@ export default function MunicipalityHome({
           🏫 保育施設
         </button>
         <button
-          onClick={() => setActiveTab("clinic")}
+          onClick={() => handleTabChange("clinic")}
           className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
             activeTab === "clinic"
               ? "bg-white text-[#e05a2b] shadow-sm"
@@ -105,7 +131,7 @@ export default function MunicipalityHome({
       <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100">
         <LeafletMap
           nurseries={activeTab === "nursery" ? nurseries : []}
-          clinics={activeTab === "clinic" ? clinics : []}
+          clinics={activeTab === "clinic" ? filteredClinics : []}
           center={defaultCenter}
           zoom={municipality.default_zoom}
           userLocation={userLocation}
@@ -166,45 +192,96 @@ export default function MunicipalityHome({
       {/* 医療機関タブ */}
       {activeTab === "clinic" && (
         <div>
-          <div className="flex items-center justify-between mb-3">
+          {/* 診療科フィルター */}
+          <div className="overflow-x-auto pb-2 -mx-4 px-4">
+            <div className="flex gap-2 min-w-max">
+              <button
+                onClick={() => setSelectedDepartment(null)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  !selectedDepartment
+                    ? "bg-[#e05a2b] text-white shadow-sm"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                すべて ({clinics.length})
+              </button>
+              {availableDepartments.map((dept) => {
+                const count = clinics.filter((c) =>
+                  c.departments.includes(dept)
+                ).length;
+                const isPriority = FILTER_PRIORITY_DEPTS.includes(dept);
+                return (
+                  <button
+                    key={dept}
+                    onClick={() =>
+                      setSelectedDepartment(
+                        dept === selectedDepartment ? null : dept
+                      )
+                    }
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                      selectedDepartment === dept
+                        ? "bg-[#e05a2b] text-white shadow-sm"
+                        : isPriority
+                        ? "bg-orange-50 text-orange-700 border border-orange-200"
+                        : "bg-gray-100 text-gray-600"
+                    }`}
+                  >
+                    {dept} ({count})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-3 mb-3">
             <h3 className="text-sm font-bold text-gray-900">
               {userLocation ? "🏆 近い順ランキング" : "📋 医療機関一覧"}
+              {selectedDepartment && (
+                <span className="ml-1 text-[#e05a2b]">· {selectedDepartment}</span>
+              )}
             </h3>
-            <span className="text-xs text-gray-400">{clinics.length}件</span>
+            <span className="text-xs text-gray-400">{filteredClinics.length}件</span>
           </div>
-          <div className="space-y-3">
-            {userLocation && rankedClinics ? (
-              rankedClinics.map((clinic, index) => (
-                <ClinicCard
-                  key={clinic.id}
-                  clinic={clinic}
-                  rank={index + 1}
-                  municipalityId={municipality.id}
-                  transportMode={transportMode}
-                />
-              ))
-            ) : (
-              clinics.map((clinic, index) => {
-                const withDistance = {
-                  ...clinic,
-                  distance_km: 0,
-                  distance_text: "−",
-                  walk_minutes: 0,
-                  bike_minutes: 0,
-                  car_minutes: 0,
-                };
-                return (
+
+          {filteredClinics.length === 0 ? (
+            <div className="text-center py-8 text-gray-400 text-sm">
+              {selectedDepartment}の医療機関は見つかりませんでした
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {userLocation && rankedClinics ? (
+                rankedClinics.map((clinic, index) => (
                   <ClinicCard
                     key={clinic.id}
-                    clinic={withDistance}
+                    clinic={clinic}
                     rank={index + 1}
                     municipalityId={municipality.id}
                     transportMode={transportMode}
                   />
-                );
-              })
-            )}
-          </div>
+                ))
+              ) : (
+                filteredClinics.map((clinic, index) => {
+                  const withDistance = {
+                    ...clinic,
+                    distance_km: 0,
+                    distance_text: "−",
+                    walk_minutes: 0,
+                    bike_minutes: 0,
+                    car_minutes: 0,
+                  };
+                  return (
+                    <ClinicCard
+                      key={clinic.id}
+                      clinic={withDistance}
+                      rank={index + 1}
+                      municipalityId={municipality.id}
+                      transportMode={transportMode}
+                    />
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
       )}
 
