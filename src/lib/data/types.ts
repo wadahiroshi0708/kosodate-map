@@ -134,6 +134,40 @@ export interface ClinicWithDistance extends Clinic {
   car_minutes: number;
 }
 
+/** 行政サポートのカテゴリ */
+export type GovSupportCategory =
+  | "給付金・手当"
+  | "医療費助成"
+  | "保育・教育"
+  | "産前産後"
+  | "相談・支援"
+  | "ひとり親支援"
+  | "障害児支援";
+
+/** 金額詳細の行 */
+export interface AmountDetail {
+  label: string;
+  value: string;
+}
+
+/** 行政サポート制度 */
+export interface GovSupport {
+  id: string;
+  municipality_id: string;
+  category: GovSupportCategory;
+  title: string;
+  target: string;
+  summary: string;
+  amount: string | null;
+  amount_detail: AmountDetail[];
+  how_to_apply: string | null;
+  no_application_needed: boolean;
+  contact_name: string;
+  contact_phone: string;
+  url: string | null;
+  tags: string[];
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

@@ -1,0 +1,124 @@
+"use client";
+
+import { useState } from "react";
+import type { GovSupport, GovSupportCategory } from "@/lib/data/types";
+
+interface GovSupportCardProps {
+  support: GovSupport;
+}
+
+const CATEGORY_STYLES: Record<GovSupportCategory, { bg: string; text: string; icon: string }> = {
+  "給付金・手当": { bg: "bg-green-100", text: "text-green-700", icon: "💴" },
+  "医療費助成":   { bg: "bg-blue-100",  text: "text-blue-700",  icon: "🏥" },
+  "保育・教育":   { bg: "bg-purple-100",text: "text-purple-700",icon: "🏫" },
+  "産前産後":     { bg: "bg-pink-100",  text: "text-pink-700",  icon: "🤱" },
+  "相談・支援":   { bg: "bg-orange-100",text: "text-orange-700",icon: "💬" },
+  "ひとり親支援": { bg: "bg-yellow-100",text: "text-yellow-700",icon: "👤" },
+  "障害児支援":   { bg: "bg-gray-100",  text: "text-gray-700",  icon: "🤝" },
+};
+
+export default function GovSupportCard({ support }: GovSupportCardProps) {
+  const [expanded, setExpanded] = useState(false);
+  const style = CATEGORY_STYLES[support.category];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* ヘッダー */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left p-4"
+      >
+        <div className="flex items-start gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${style.bg} ${style.text}`}>
+                {style.icon} {support.category}
+              </span>
+              {support.no_application_needed && (
+                <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700">
+                  ✓ 申請不要
+                </span>
+              )}
+            </div>
+            <h3 className="font-bold text-[15px] text-gray-900 leading-snug">
+              {support.title}
+            </h3>
+            {support.amount && (
+              <p className="mt-1 text-sm font-semibold text-[#2d9e6b]">
+                {support.amount}
+              </p>
+            )}
+          </div>
+          <span className={`flex-shrink-0 text-gray-400 text-lg transition-transform ${expanded ? "rotate-180" : ""}`}>
+            ▾
+          </span>
+        </div>
+      </button>
+
+      {/* 展開コンテンツ */}
+      {expanded && (
+        <div className="px-4 pb-4 border-t border-gray-50 space-y-3">
+          {/* 対象者 */}
+          <div className="pt-3">
+            <p className="text-xs font-semibold text-gray-500 mb-1">👥 対象者</p>
+            <p className="text-sm text-gray-700">{support.target}</p>
+          </div>
+
+          {/* 概要 */}
+          <div>
+            <p className="text-xs font-semibold text-gray-500 mb-1">📋 内容</p>
+            <p className="text-sm text-gray-700">{support.summary}</p>
+          </div>
+
+          {/* 金額詳細 */}
+          {support.amount_detail.length > 0 && (
+            <div className="bg-gray-50 rounded-lg p-3">
+              <p className="text-xs font-semibold text-gray-500 mb-2">💴 金額詳細</p>
+              <div className="space-y-1">
+                {support.amount_detail.map((d, i) => (
+                  <div key={i} className="flex justify-between text-xs">
+                    <span className="text-gray-600">{d.label}</span>
+                    <span className="font-semibold text-gray-800">{d.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 申請方法 */}
+          {support.how_to_apply && (
+            <div>
+              <p className="text-xs font-semibold text-gray-500 mb-1">📝 申請方法</p>
+              <p className="text-sm text-gray-700">{support.how_to_apply}</p>
+            </div>
+          )}
+
+          {/* 問い合わせ */}
+          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+            <div>
+              <p className="text-xs text-gray-500">{support.contact_name}</p>
+              <a
+                href={`tel:${support.contact_phone}`}
+                className="text-sm font-semibold text-[#2d9e6b]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                📞 {support.contact_phone}
+              </a>
+            </div>
+            {support.url && (
+              <a
+                href={support.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-blue-500 underline"
+                onClick={(e) => e.stopPropagation()}
+              >
+                詳細ページ →
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

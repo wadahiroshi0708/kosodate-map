@@ -7,7 +7,7 @@
 import fs from "fs/promises";
 import path from "path";
 import type { DataRepository } from "./repository";
-import type { Municipality, Nursery, Clinic } from "./types";
+import type { Municipality, Nursery, Clinic, GovSupport } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "data", "municipalities");
 
@@ -78,6 +78,16 @@ export class JsonDataRepository implements DataRepository {
   async getClinic(municipalityId: string, clinicId: string): Promise<Clinic | null> {
     const clinics = await this.getClinics(municipalityId);
     return clinics.find((c) => c.id === clinicId) ?? null;
+  }
+
+  async getGovSupports(municipalityId: string): Promise<GovSupport[]> {
+    try {
+      const filePath = path.join(DATA_DIR, municipalityId, "gov_support.json");
+      const raw = await fs.readFile(filePath, "utf-8");
+      return JSON.parse(raw);
+    } catch {
+      return [];
+    }
   }
 
   async municipalityExists(id: string): Promise<boolean> {

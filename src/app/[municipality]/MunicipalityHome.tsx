@@ -2,10 +2,11 @@
 
 import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
-import type { Municipality, Nursery, Clinic, Location, TransportMode } from "@/lib/data/types";
+import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
 import NurseryCard from "@/components/nursery/NurseryCard";
 import ClinicCard from "@/components/clinic/ClinicCard";
+import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
 import AddressInput from "@/components/common/AddressInput";
 
@@ -19,21 +20,34 @@ const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
   ),
 });
 
-type TabType = "nursery" | "clinic";
+type TabType = "nursery" | "clinic" | "gov";
 
 // 子育て世代に重要な診療科（フィルターで優先表示）
 const FILTER_PRIORITY_DEPTS = ["小児科", "耳鼻いんこう科", "皮膚科", "産婦人科", "内科", "整形外科"];
+
+// 行政サポートカテゴリの表示順
+const GOV_CATEGORY_ORDER: GovSupportCategory[] = [
+  "給付金・手当",
+  "医療費助成",
+  "保育・教育",
+  "産前産後",
+  "相談・支援",
+  "ひとり親支援",
+  "障害児支援",
+];
 
 interface MunicipalityHomeProps {
   municipality: Municipality;
   nurseries: Nursery[];
   clinics: Clinic[];
+  govSupports: GovSupport[];
 }
 
 export default function MunicipalityHome({
   municipality,
   nurseries,
   clinics,
+  govSupports,
 }: MunicipalityHomeProps) {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [transportMode, setTransportMode] = useState<TransportMode>("bike");
@@ -79,8 +93,18 @@ export default function MunicipalityHome({
 
   const handleTabChange = useCallback((tab: TabType) => {
     setActiveTab(tab);
-    if (tab === "nursery") setSelectedDepartment(null);
+    if (tab !== "clinic") setSelectedDepartment(null);
   }, []);
+
+  // 行政サポートをカテゴリ順にグルーピング
+  const govSupportsByCategory = useMemo(() => {
+    const map = new Map<GovSupportCategory, GovSupport[]>();
+    GOV_CATEGORY_ORDER.forEach((cat) => {
+      const items = govSupports.filter((s) => s.category === cat);
+      if (items.length > 0) map.set(cat, items);
+    });
+    return map;
+  }, [govSupports]);
 
   const dataDate = nurseries[0]?.data_date ?? "不明";
 
@@ -92,7 +116,7 @@ export default function MunicipalityHome({
           {municipality.name_ja}の子育て情報
         </h2>
         <p className="text-xs text-green-200">
-          保育施設 {nurseries.length}件・医療機関 {clinics.length}件
+          保育施設 {nurseries.length}件・医療機関 {clinics.length}件・支援制度 {govSupports.length}件
           {activeTab === "nursery" && ` ・ データ更新日: ${dataDate}`}
         </p>
       </div>
@@ -101,7 +125,7 @@ export default function MunicipalityHome({
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
         <button
           onClick={() => handleTabChange("nursery")}
-          className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
             activeTab === "nursery"
               ? "bg-white text-[#2d9e6b] shadow-sm"
               : "text-gray-500"
@@ -111,13 +135,23 @@ export default function MunicipalityHome({
         </button>
         <button
           onClick={() => handleTabChange("clinic")}
-          className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-all ${
+          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
             activeTab === "clinic"
               ? "bg-white text-[#e05a2b] shadow-sm"
               : "text-gray-500"
           }`}
         >
           🏥 医療機関
+        </button>
+        <button
+          onClick={() => handleTabChange("gov")}
+          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
+            activeTab === "gov"
+              ? "bg-white text-[#2d6eb0] shadow-sm"
+              : "text-gray-500"
+          }`}
+        >
+          🏛 支援制度
         </button>
       </div>
 
@@ -127,8 +161,8 @@ export default function MunicipalityHome({
         defaultCenter={defaultCenter}
       />
 
-      {/* マップ */}
-      <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100">
+      {/* マップ（支援制度タブでは非表示） */}
+      {activeTab !== "gov" && <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100">
         <LeafletMap
           nurseries={activeTab === "nursery" ? nurseries : []}
           clinics={activeTab === "clinic" ? filteredClinics : []}
@@ -139,7 +173,7 @@ export default function MunicipalityHome({
           onNurseryClick={setSelectedNurseryId}
           className="h-[250px]"
         />
-      </div>
+      </div>}
 
       {/* 移動手段セレクター */}
       {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
@@ -282,6 +316,28 @@ export default function MunicipalityHome({
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* 行政サポートタブ */}
+      {activeTab === "gov" && (
+        <div className="space-y-6">
+          <div className="bg-blue-50 rounded-xl p-3 text-xs text-blue-700 border border-blue-100">
+            💡 タップすると詳細・申請方法・問い合わせ先が確認できます
+          </div>
+          {Array.from(govSupportsByCategory.entries()).map(([category, items]) => (
+            <div key={category}>
+              <h3 className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-1">
+                <span>{category}</span>
+                <span className="text-xs font-normal text-gray-400">({items.length}件)</span>
+              </h3>
+              <div className="space-y-2">
+                {items.map((support) => (
+                  <GovSupportCard key={support.id} support={support} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
