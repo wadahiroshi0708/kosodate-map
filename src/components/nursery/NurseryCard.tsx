@@ -16,6 +16,8 @@ const typeColors: Record<string, string> = {
   "認定こども園": "bg-purple-100 text-purple-700",
   "小規模保育": "bg-orange-100 text-orange-700",
   "事業所内保育": "bg-teal-100 text-teal-700",
+  "幼稚園": "bg-pink-100 text-pink-700",
+  "認可外保育施設": "bg-gray-100 text-gray-600",
 };
 
 const transportIcons: Record<TransportMode, string> = {
@@ -85,7 +87,8 @@ export default function NurseryCard({
         {/* 下段: 空き状況 + 定員 */}
         <div className="mt-3 flex items-center justify-between">
           <div className="flex gap-1 flex-wrap">
-            {(["age_0", "age_1", "age_2"] as const).map((key) => {
+            {(["age_0", "age_1", "age_2", "age_3", "age_4", "age_5"] as const).map((key) => {
+              if (nursery.availability[key] === null) return null;
               const ageNum = key.replace("age_", "");
               return (
                 <AvailabilityBadge

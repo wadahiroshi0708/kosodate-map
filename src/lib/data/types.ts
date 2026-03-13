@@ -37,7 +37,8 @@ export type NurseryType =
   | "認定こども園"
   | "小規模保育"
   | "事業所内保育"
-  | "幼稚園";
+  | "幼稚園"
+  | "認可外保育施設";
 
 /** 空き状況の記号 */
 export type AvailabilityStatus = "○" | "△" | "×" | null;

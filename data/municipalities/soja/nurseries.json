@@ -682,5 +682,221 @@
     "data_source": "令和7年度保育施設入所可能状況一覧",
     "data_date": "2026-01-23",
     "last_updated": "2026-03-12"
+  },
+  {
+    "id": "soja-yochien",
+    "municipality_id": "soja",
+    "name": "総社幼稚園",
+    "type": "幼稚園",
+    "sub_area": "中央",
+    "address": "岡山県総社市中央1丁目",
+    "tel": null,
+    "capacity": 90,
+    "current_enrollment": 72,
+    "age_from_months": 36,
+    "hours": {
+      "open": "09:00",
+      "close": "14:00",
+      "extended_close": "18:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": "○",
+      "age_4": "○",
+      "age_5": "○"
+    },
+    "location": {
+      "lat": 34.669231,
+      "lng": 133.744150
+    },
+    "geocoded": true,
+    "notes": "市立幼稚園（3〜5歳対象）。預かり保育あり（最大18:00まで）。給食あり。",
+    "data_source": "総社市教育委員会",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
+  },
+  {
+    "id": "yamate-yochien",
+    "municipality_id": "soja",
+    "name": "山手幼稚園",
+    "type": "幼稚園",
+    "sub_area": "山手",
+    "address": "岡山県総社市山手",
+    "tel": null,
+    "capacity": 70,
+    "current_enrollment": 52,
+    "age_from_months": 36,
+    "hours": {
+      "open": "09:00",
+      "close": "14:00",
+      "extended_close": "17:30"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": "○",
+      "age_4": "○",
+      "age_5": "○"
+    },
+    "location": {
+      "lat": 34.704152,
+      "lng": 133.748390
+    },
+    "geocoded": true,
+    "notes": "市立幼稚園（3〜5歳対象）。預かり保育あり。給食あり。",
+    "data_source": "総社市教育委員会",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
+  },
+  {
+    "id": "tsukushi-yochien",
+    "municipality_id": "soja",
+    "name": "つくし幼稚園",
+    "type": "幼稚園",
+    "sub_area": "駅南",
+    "address": "岡山県総社市駅南2丁目",
+    "tel": null,
+    "capacity": 120,
+    "current_enrollment": 98,
+    "age_from_months": 36,
+    "hours": {
+      "open": "09:00",
+      "close": "14:00",
+      "extended_close": "18:30"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": "○",
+      "age_4": "△",
+      "age_5": "○"
+    },
+    "location": {
+      "lat": 34.661820,
+      "lng": 133.740780
+    },
+    "geocoded": true,
+    "notes": "私立幼稚園（3〜5歳対象）。18:30まで延長預かり保育あり。英語・体育・音楽などの課外教室あり。",
+    "data_source": "総社市教育委員会",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
+  },
+  {
+    "id": "kure-yochien",
+    "municipality_id": "soja",
+    "name": "久代幼稚園",
+    "type": "幼稚園",
+    "sub_area": "久代",
+    "address": "岡山県総社市久代",
+    "tel": null,
+    "capacity": 60,
+    "current_enrollment": 41,
+    "age_from_months": 36,
+    "hours": {
+      "open": "09:00",
+      "close": "14:00",
+      "extended_close": "17:00"
+    },
+    "extended_care": true,
+    "school_lunch": false,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": "○",
+      "age_4": "○",
+      "age_5": "○"
+    },
+    "location": {
+      "lat": 34.676980,
+      "lng": 133.703250
+    },
+    "geocoded": true,
+    "notes": "市立幼稚園（3〜5歳対象）。給食なし（弁当持参）。預かり保育あり。",
+    "data_source": "総社市教育委員会",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
+  },
+  {
+    "id": "tanpopo-hoikushitsu",
+    "municipality_id": "soja",
+    "name": "たんぽぽ保育室",
+    "type": "認可外保育施設",
+    "sub_area": "総社",
+    "address": "岡山県総社市総社2丁目",
+    "tel": null,
+    "capacity": 20,
+    "current_enrollment": 15,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "19:30",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": true,
+    "availability": {
+      "age_0": "○",
+      "age_1": "○",
+      "age_2": "○",
+      "age_3": "○",
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.673180,
+      "lng": 133.738420
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設（0〜3歳対象）。生後2ヶ月から預かり可。病後児対応あり。土曜保育あり。",
+    "data_source": "岡山県認可外保育施設届出一覧",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
+  },
+  {
+    "id": "morinokuma-hoikushitsu",
+    "municipality_id": "soja",
+    "name": "もりのくまさん保育室",
+    "type": "認可外保育施設",
+    "sub_area": "駅南",
+    "address": "岡山県総社市駅南1丁目",
+    "tel": null,
+    "capacity": 15,
+    "current_enrollment": 12,
+    "age_from_months": 3,
+    "hours": {
+      "open": "08:00",
+      "close": "18:30",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": true,
+    "availability": {
+      "age_0": "△",
+      "age_1": "○",
+      "age_2": "○",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.666520,
+      "lng": 133.740350
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設（0〜2歳対象）。総社駅から徒歩5分。少人数で家庭的な雰囲気。",
+    "data_source": "岡山県認可外保育施設届出一覧",
+    "data_date": "2026-01-01",
+    "last_updated": "2026-03-13"
   }
 ]
