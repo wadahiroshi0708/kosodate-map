@@ -55,13 +55,18 @@ export default function MunicipalityHome({
   const [activeTab, setActiveTab] = useState<TabType>("nursery");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
 
-  // URLの ?tab= パラメータに応じて初期タブを設定
+  // URLの ?tab= パラメータに応じてタブを同期（ドロワー遷移対応）
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get("tab") as TabType | null;
-    if (tab && ["nursery", "clinic", "gov"].includes(tab)) {
-      setActiveTab(tab);
-    }
+    const sync = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab") as TabType | null;
+      const next = tab && ["nursery", "clinic", "gov"].includes(tab) ? tab : "nursery";
+      setActiveTab(next);
+      if (next !== "clinic") setSelectedDepartment(null);
+    };
+    sync();
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
   }, []);
 
   const defaultCenter: Location = {
@@ -125,43 +130,10 @@ export default function MunicipalityHome({
           {municipality.name_ja}の子育て情報
         </h2>
         <p className="text-xs text-green-200">
-          保育施設 {nurseries.length}件・医療機関 {clinics.length}件・支援制度 {govSupports.length}件
-          {activeTab === "nursery" && ` ・ データ更新日: ${dataDate}`}
+          {activeTab === "nursery" && `🏫 保育施設 ${nurseries.length}件 ・ データ更新日: ${dataDate}`}
+          {activeTab === "clinic" && `🏥 医療機関 ${clinics.length}件`}
+          {activeTab === "gov" && `🏛 支援制度 ${govSupports.length}件`}
         </p>
-      </div>
-
-      {/* タブ切り替え */}
-      <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
-        <button
-          onClick={() => handleTabChange("nursery")}
-          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "nursery"
-              ? "bg-white text-[#2d9e6b] shadow-sm"
-              : "text-gray-500"
-          }`}
-        >
-          🏫 保育施設
-        </button>
-        <button
-          onClick={() => handleTabChange("clinic")}
-          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "clinic"
-              ? "bg-white text-[#e05a2b] shadow-sm"
-              : "text-gray-500"
-          }`}
-        >
-          🏥 医療機関
-        </button>
-        <button
-          onClick={() => handleTabChange("gov")}
-          className={`flex-1 py-2 px-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "gov"
-              ? "bg-white text-[#2d6eb0] shadow-sm"
-              : "text-gray-500"
-          }`}
-        >
-          🏛 支援制度
-        </button>
       </div>
 
       {/* 自宅位置設定 */}
