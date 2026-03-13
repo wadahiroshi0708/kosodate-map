@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 
 interface AppHeaderProps {
@@ -18,6 +18,8 @@ const NAV_ITEMS = [
     description: "認可保育所・こども園の空き状況と距離ランキング",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}`,
+    type: "tab",
   },
   {
     tab: "clinic",
@@ -26,6 +28,8 @@ const NAV_ITEMS = [
     description: "クリニック・病院を診療科別に絞り込み検索",
     activeColor: "text-[#e05a2b]",
     activeBg: "bg-orange-50 border border-orange-200",
+    href: (municipalityId: string) => `/${municipalityId}?tab=clinic`,
+    type: "tab",
   },
   {
     tab: "gov",
@@ -34,18 +38,34 @@ const NAV_ITEMS = [
     description: "児童手当・医療費助成など14の行政サポート",
     activeColor: "text-[#2d6eb0]",
     activeBg: "bg-blue-50 border border-blue-200",
+    href: (municipalityId: string) => `/${municipalityId}?tab=gov`,
+    type: "tab",
+  },
+  {
+    tab: "checklist",
+    icon: "✅",
+    title: "転入チェックリスト",
+    description: "転入後の手続き・生活セットアップを管理",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/checklist`,
+    type: "page",
   },
 ];
 
 function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const activeTab = searchParams.get("tab") ?? "nursery";
 
-  const getHref = (tab: string) =>
-    tab === "nursery"
-      ? `/${municipalityId}`
-      : `/${municipalityId}?tab=${tab}`;
+  // チェックリストページかどうか
+  const isChecklistPage = pathname?.endsWith("/checklist") ?? false;
+
+  const isActive = (item: typeof NAV_ITEMS[number]) => {
+    if (isChecklistPage) return item.tab === "checklist";
+    return item.type === "tab" && activeTab === item.tab;
+  };
 
   return (
     <>
@@ -124,21 +144,22 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
             <nav className="flex-1 px-4 py-4 space-y-2">
               <p className="text-xs text-gray-400 font-medium px-1 mb-3">カテゴリ</p>
               {NAV_ITEMS.map((item) => {
-                const isActive = activeTab === item.tab;
+                const active = isActive(item);
+                const href = municipalityId ? item.href(municipalityId) : "/";
                 return (
                   <Link
                     key={item.tab}
-                    href={getHref(item.tab)}
+                    href={href}
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-                      isActive ? item.activeBg : "hover:bg-gray-50"
+                      active ? item.activeBg : "hover:bg-gray-50"
                     }`}
                   >
                     <span className="text-2xl w-8 text-center">{item.icon}</span>
                     <div className="flex-1 min-w-0">
                       <div
                         className={`font-semibold text-sm ${
-                          isActive ? item.activeColor : "text-gray-800"
+                          active ? item.activeColor : "text-gray-800"
                         }`}
                       >
                         {item.title}
@@ -147,7 +168,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                         {item.description}
                       </div>
                     </div>
-                    {isActive && (
+                    {active && (
                       <span className={`text-xs ${item.activeColor}`}>●</span>
                     )}
                   </Link>

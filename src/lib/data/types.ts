@@ -168,6 +168,38 @@ export interface GovSupport {
   tags: string[];
 }
 
+/** 転入チェックリストのアイテム */
+export interface ChecklistItem {
+  id: string;
+  text: string;
+  deadline: string | null;
+  urgency: "high" | "medium" | "low";
+  note: string | null;
+}
+
+/** チェックリストのセクション */
+export interface ChecklistSection {
+  id: string;
+  title: string;
+  items: ChecklistItem[];
+}
+
+/** ペルソナ別チェックリスト */
+export interface PersonaChecklist {
+  id: string;
+  icon: string;
+  label: string;
+  description: string;
+  color: string;
+  sections: ChecklistSection[];
+}
+
+/** 自治体のチェックリスト全体 */
+export interface MunicipalityChecklist {
+  municipality_id: string;
+  personas: PersonaChecklist[];
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

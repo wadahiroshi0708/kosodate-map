@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>こそだてマップ ロジックツリー</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    padding: 32px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 32px;
+  }
+
+  /* ツリー全体レイアウト */
+  .tree {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* 各レベルの行 */
+  .level {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  /* コネクター */
+  .connector-down {
+    display: flex;
+    justify-content: center;
+    height: 28px;
+    position: relative;
+  }
+  .connector-down::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #d1d5db;
+    transform: translateX(-50%);
+  }
+
+  /* 横コネクター（複数ノードを繋ぐ） */
+  .connector-row {
+    display: flex;
+    justify-content: center;
+    height: 28px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  /* ノード基本スタイル */
+  .node {
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .node .label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+  .node .title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .node .desc {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ゴールノード */
+  .node-goal {
+    background: linear-gradient(135deg, #2d9e6b, #1a7a52);
+    color: white;
+    min-width: 320px;
+    padding: 18px 24px;
+    box-shadow: 0 4px 20px rgba(45,158,107,0.35);
+  }
+  .node-goal .title { font-size: 15px; }
+
+  /* WHYノード（オレンジ） */
+  .node-why {
+    background: white;
+    border: 2px solid #fb923c;
+    color: #374151;
+    min-width: 200px;
+  }
+  .node-why .label { color: #fb923c; }
+  .node-why .title { color: #c2410c; }
+
+  /* WHYサブノード */
+  .node-why-sub {
+    background: #fff7ed;
+    border: 1.5px solid #fed7aa;
+    color: #374151;
+    min-width: 155px;
+  }
+  .node-why-sub .title { font-size: 12px; color: #9a3412; }
+  .node-why-sub .desc { color: #7c3aed; font-size: 10px; }
+
+  /* WHOノード（青） */
+  .node-who {
+    background: white;
+    border: 2px solid #60a5fa;
+    color: #374151;
+    min-width: 200px;
+  }
+  .node-who .label { color: #3b82f6; }
+  .node-who .title { color: #1d4ed8; }
+
+  /* WHOサブノード */
+  .node-who-sub {
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    color: #374151;
+    min-width: 155px;
+  }
+  .node-who-sub .title { font-size: 12px; color: #1e40af; }
+  .node-who-sub .desc { color: #6b7280; font-size: 10px; }
+
+  /* HOWノード（緑） */
+  .node-how {
+    background: white;
+    border: 2px solid #34d399;
+    color: #374151;
+    min-width: 200px;
+  }
+  .node-how .label { color: #10b981; }
+  .node-how .title { color: #065f46; }
+
+  /* HOWサブノード（タブ） */
+  .node-tab {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #374151;
+    min-width: 150px;
+  }
+  .node-tab .title { font-size: 12px; color: #166534; }
+  .node-tab .badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .badge-freq-high { background: #dcfce7; color: #166534; }
+  .badge-freq-mid  { background: #fef3c7; color: #92400e; }
+  .badge-freq-low  { background: #f1f5f9; color: #64748b; }
+
+  /* HOWサブサブノード（機能） */
+  .node-feature {
+    background: white;
+    border: 1px solid #d1fae5;
+    color: #374151;
+    min-width: 120px;
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .node-feature .title { font-size: 11px; color: #065f46; }
+  .node-feature .done {
+    font-size: 9px;
+    color: #10b981;
+    font-weight: 700;
+  }
+  .node-feature .plan {
+    font-size: 9px;
+    color: #f59e0b;
+    font-weight: 700;
+  }
+
+  /* 差別化ノード */
+  .node-diff {
+    background: white;
+    border: 2px solid #a78bfa;
+    color: #374151;
+    min-width: 200px;
+  }
+  .node-diff .label { color: #7c3aed; }
+  .node-diff .title { color: #5b21b6; }
+
+  .node-diff-sub {
+    background: #faf5ff;
+    border: 1.5px solid #ddd6fe;
+    color: #374151;
+    min-width: 155px;
+  }
+  .node-diff-sub .title { font-size: 12px; color: #6d28d9; }
+  .node-diff-sub .desc { font-size: 10px; color: #7c3aed; }
+
+  /* レイアウトヘルパー */
+  .row { display: flex; gap: 12px; align-items: flex-start; justify-content: center; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  /* 横線で複数子ノードを繋ぐ */
+  .branch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .branch-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+  }
+  .branch-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background: #d1d5db;
+  }
+
+  /* セクション間スペース */
+  .section { margin-bottom: 8px; }
+
+  /* ページ全体の縦ツリー */
+  .main-trunk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* セクションラベル（左寄せ） */
+  .section-row {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+  }
+  .tag-why { background: #fed7aa; color: #9a3412; }
+  .tag-who { background: #bfdbfe; color: #1e40af; }
+  .tag-how { background: #bbf7d0; color: #166534; }
+  .tag-diff { background: #ddd6fe; color: #5b21b6; }
+  .section-line { flex: 1; height: 1px; background: #e5e7eb; }
+
+  /* ミニバッジ */
+  .mini { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 10px; margin-top: 3px; display: inline-block; }
+  .mini-green { background: #d1fae5; color: #065f46; }
+  .mini-yellow { background: #fef3c7; color: #92400e; }
+
+  /* 垂直コネクターライン */
+  .vline { width: 2px; background: #d1d5db; height: 24px; margin: 0 auto; }
+  /* 横コネクターライン（子ノード間） */
+  .hline-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .hline-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - (var(--spread) / 2));
+    width: var(--spread);
+    height: 2px;
+    background: #d1d5db;
+  }
+  .hcol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hcol-vline { width: 2px; background: #d1d5db; height: 20px; }
+
+</style>
+</head>
+<body>
+
+<h1>こそだてマップ ロジックツリー</h1>
+<p class="subtitle">プロダクト企画 / 2026.03</p>
+
+<div class="main-trunk">
+
+  <!-- マイルストーン注記 -->
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px; justify-content:center;">
+    <div style="background:#fef3c7; border:1.5px solid #fde68a; border-radius:8px; padding:8px 16px; font-size:11px; color:#92400e; text-align:center; max-width:480px;">
+      ⚠️ 移住はゴールではなくマイルストーン。<br>
+      ゴールは「移住した後、総社で豊かに暮らし続けること」
+    </div>
+  </div>
+
+  <!-- マイルストーン -->
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:0;">
+    <div style="flex:1; height:2px; background:#e5e7eb; max-width:200px; margin-left:auto;"></div>
+    <div style="background:#e5e7eb; border-radius:20px; padding:4px 14px; font-size:10px; color:#9ca3af; font-weight:600; white-space:nowrap;">
+      🏁 マイルストーン
+    </div>
+    <div style="flex:1; height:2px; background:#e5e7eb; max-width:200px; margin-right:auto;"></div>
+  </div>
+  <div class="vline" style="height:16px; background:#e5e7eb;"></div>
+  <div style="background:white; border:2px dashed #d1d5db; border-radius:12px; padding:12px 24px; text-align:center; color:#9ca3af; font-size:13px; font-weight:600; margin-bottom:0;">
+    総社市への転居・定住
+  </div>
+  <div class="vline" style="height:16px; background:#e5e7eb;"></div>
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
+    <div style="flex:1; height:2px; background:#e5e7eb; max-width:200px; margin-left:auto;"></div>
+    <div style="background:#dcfce7; border-radius:20px; padding:4px 14px; font-size:10px; color:#166534; font-weight:600; white-space:nowrap;">
+      🎯 真のゴール
+    </div>
+    <div style="flex:1; height:2px; background:#e5e7eb; max-width:200px; margin-right:auto;"></div>
+  </div>
+
+  <!-- ゴール -->
+  <div class="node node-goal" style="min-width:360px;">
+    <div class="label">🎯 TRUE GOAL</div>
+    <div class="title">移住した子育て世帯が<br>総社市で長く豊かに<br>暮らし続けられる環境をつくる</div>
+  </div>
+
+  <div class="vline"></div>
+
+  <!-- 4つのブランチ -->
+  <!-- WHY -->
+  <div class="section-row">
+    <span class="section-tag tag-why">WHY — なぜ必要か</span>
+    <span class="section-line"></span>
+  </div>
+
+  <div style="display:flex; gap:12px; justify-content:center; margin-bottom:8px;">
+    <!-- WHY: 自治体側 -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+      <div class="node node-why" style="min-width:180px;">
+        <div class="label">自治体の課題</div>
+        <div class="title">若年層の転入・<br>定住が進まない</div>
+      </div>
+      <div class="vline"></div>
+      <div class="node node-why-sub" style="min-width:180px;">
+        <div class="title">子育て情報が市HPに分散<br>探しにくい・スマホ非対応</div>
+      </div>
+    </div>
+
+    <!-- WHY: ユーザー側 -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+      <div class="node node-why" style="min-width:380px;">
+        <div class="label">ユーザーの課題（3フェーズ）</div>
+        <div class="title">転居の各ステージで情報へのアクセスに壁がある</div>
+      </div>
+      <div class="vline"></div>
+      <div style="display:flex; gap:8px; position:relative;">
+        <div style="position:absolute; top:0; left:16px; right:16px; height:2px; background:#d1d5db;"></div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:20px;"></div>
+          <div class="node node-why-sub">
+            <div class="title">転居前</div>
+            <div class="desc">「どの市が子育てしやすいか」<br>比較できない</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:20px;"></div>
+          <div class="node node-why-sub">
+            <div class="title">転居直後</div>
+            <div class="desc">「まず何をすべきか」<br>一覧できずパニック</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:20px;"></div>
+          <div class="node node-why-sub">
+            <div class="title">定住中</div>
+            <div class="desc">「自分が使える支援制度」<br>を素早く見つけられない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vline" style="height:32px;"></div>
+
+  <!-- WHO -->
+  <div class="section-row">
+    <span class="section-tag tag-who">WHO — 誰のために（ユーザー比率）</span>
+    <span class="section-line"></span>
+  </div>
+
+  <!-- ユーザー比率バー -->
+  <div style="max-width:560px; margin:0 auto 12px; width:100%;">
+    <div style="display:flex; height:20px; border-radius:10px; overflow:hidden; font-size:10px; font-weight:700;">
+      <div style="width:10%; background:#93c5fd; display:flex; align-items:center; justify-content:center; color:#1e40af;">10%</div>
+      <div style="width:30%; background:#3b82f6; display:flex; align-items:center; justify-content:center; color:white;">30%</div>
+      <div style="width:60%; background:#1d4ed8; display:flex; align-items:center; justify-content:center; color:white;">60% ← ここが主役</div>
+    </div>
+    <div style="display:flex; font-size:9px; color:#6b7280; margin-top:4px;">
+      <div style="width:10%; text-align:center;">転居前</div>
+      <div style="width:30%; text-align:center;">転居直後</div>
+      <div style="width:60%; text-align:center;">定住中</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:12px; justify-content:center; margin-bottom:8px; position:relative;">
+    <div style="position:absolute; top:0; left:80px; right:80px; height:2px; background:#d1d5db;"></div>
+
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-who-sub" style="opacity:0.7;">
+        <div class="title">① 転居前の世帯 <span style="font-size:10px; color:#93c5fd;">10%</span></div>
+        <div class="desc">市を比較検討中<br>どこに移住すべきか悩んでいる</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-who-sub">
+        <div class="title">② 転居直後の世帯 <span style="font-size:10px; color:#3b82f6;">30%</span></div>
+        <div class="desc">引越し後・手続きに追われる<br>情報過多でパニック</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-who-sub" style="border-color:#1d4ed8; background:#eff6ff; box-shadow:0 0 0 2px #bfdbfe;">
+        <div class="title" style="color:#1e40af;">③ 定住中の世帯 <span style="font-size:10px; color:#1d4ed8; font-weight:800;">60% ★主役</span></div>
+        <div class="desc" style="color:#374151;">保活中・支援を探す<br>繰り返し・長期間 情報を参照する</div>
+        <div style="margin-top:6px; font-size:9px; color:#1d4ed8; font-weight:600; background:#dbeafe; border-radius:6px; padding:3px 6px;">
+          DAU（毎日使う）が生まれるのはここだけ
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vline" style="height:32px;"></div>
+
+  <!-- HOW -->
+  <div class="section-row">
+    <span class="section-tag tag-how">HOW — 解決手段（機能）</span>
+    <span class="section-line"></span>
+  </div>
+
+  <div style="display:flex; gap:12px; justify-content:center; margin-bottom:4px; position:relative;">
+    <div style="position:absolute; top:0; left:80px; right:80px; height:2px; background:#d1d5db;"></div>
+
+    <!-- 保育施設タブ -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-tab">
+        <div class="title">🏫 保育施設タブ</div>
+        <span class="badge badge-freq-high">週単位で使う</span>
+      </div>
+      <div class="vline"></div>
+      <div style="display:flex; gap:6px; position:relative;">
+        <div style="position:absolute; top:0; left:10px; right:10px; height:2px; background:#d1d5db;"></div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">距離ランキング</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">年齢別フィルター</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">施設詳細・連絡先</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 医療機関タブ -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-tab">
+        <div class="title">🏥 医療機関タブ</div>
+        <span class="badge badge-freq-low">転入時1〜2回のみ</span>
+      </div>
+      <div class="vline"></div>
+      <div style="display:flex; gap:6px; position:relative;">
+        <div style="position:absolute; top:0; left:10px; right:10px; height:2px; background:#d1d5db;"></div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">診療科フィルター</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">Google評価・電話</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行政支援タブ -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-tab">
+        <div class="title">🏛 行政支援タブ</div>
+        <span class="badge badge-freq-mid">ライフイベント毎</span>
+      </div>
+      <div class="vline"></div>
+      <div style="display:flex; gap:6px; position:relative;">
+        <div style="position:absolute; top:0; left:10px; right:10px; height:2px; background:#d1d5db;"></div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">14制度・アコーディオン</div>
+            <div class="done">✅ 実装済み</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div class="vline" style="height:18px;"></div>
+          <div class="node node-feature">
+            <div class="title">転入チェックリスト</div>
+            <div class="plan">🟡 予定</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="vline" style="height:32px;"></div>
+
+  <!-- DIFF -->
+  <div class="section-row">
+    <span class="section-tag tag-diff">DIFF — 競合との差別化</span>
+    <span class="section-line"></span>
+  </div>
+
+  <div style="display:flex; gap:12px; justify-content:center; margin-bottom:24px; position:relative;">
+    <div style="position:absolute; top:0; left:80px; right:80px; height:2px; background:#d1d5db;"></div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-diff-sub">
+        <div class="title">市の公式HP</div>
+        <div class="desc">情報は網羅的だが<br>探しにくい・スマホ非最適</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-diff-sub">
+        <div class="title">全国まとめサイト</div>
+        <div class="desc">一般情報のみ<br>市独自の制度・施設なし</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div class="vline" style="height:20px;"></div>
+      <div class="node node-diff-sub" style="border-color:#2d9e6b; background:#f0fdf4;">
+        <div class="title" style="color:#166534;">✨ こそだてマップ</div>
+        <div class="desc" style="color:#2d9e6b;">総社市特化 × スマホ最適<br>× ユースケース別フィルター</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
