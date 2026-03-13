@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
@@ -52,22 +53,14 @@ export default function MunicipalityHome({
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [transportMode, setTransportMode] = useState<TransportMode>("bike");
   const [selectedNurseryId, setSelectedNurseryId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<TabType>("nursery");
+  const searchParams = useSearchParams();
+  const activeTab = (searchParams.get("tab") as TabType | null) ?? "nursery";
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
 
-  // URLの ?tab= パラメータに応じてタブを同期（ドロワー遷移対応）
+  // タブが clinic 以外に変わったら診療科フィルターをリセット
   useEffect(() => {
-    const sync = () => {
-      const params = new URLSearchParams(window.location.search);
-      const tab = params.get("tab") as TabType | null;
-      const next = tab && ["nursery", "clinic", "gov"].includes(tab) ? tab : "nursery";
-      setActiveTab(next);
-      if (next !== "clinic") setSelectedDepartment(null);
-    };
-    sync();
-    window.addEventListener("popstate", sync);
-    return () => window.removeEventListener("popstate", sync);
-  }, []);
+    if (activeTab !== "clinic") setSelectedDepartment(null);
+  }, [activeTab]);
 
   const defaultCenter: Location = {
     lat: municipality.center_lat,
@@ -103,11 +96,6 @@ export default function MunicipalityHome({
 
   const handleLocationSet = useCallback((location: Location) => {
     setUserLocation(location);
-  }, []);
-
-  const handleTabChange = useCallback((tab: TabType) => {
-    setActiveTab(tab);
-    if (tab !== "clinic") setSelectedDepartment(null);
   }, []);
 
   // 行政サポートをカテゴリ順にグルーピング

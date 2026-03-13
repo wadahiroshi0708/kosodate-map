@@ -1,5 +1,6 @@
 import { dataRepository } from "@/lib/data/json-adapter";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import MunicipalityHome from "./MunicipalityHome";
 
 interface MunicipalityPageProps {
@@ -23,11 +24,13 @@ export default async function MunicipalityPage({
   ]);
 
   return (
-    <MunicipalityHome
-      municipality={municipality}
-      nurseries={nurseries}
-      clinics={clinics}
-      govSupports={govSupports}
-    />
+    <Suspense>
+      <MunicipalityHome
+        municipality={municipality}
+        nurseries={nurseries}
+        clinics={clinics}
+        govSupports={govSupports}
+      />
+    </Suspense>
   );
 }
