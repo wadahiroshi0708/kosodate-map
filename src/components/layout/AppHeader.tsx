@@ -51,6 +51,16 @@ const NAV_ITEMS = [
     href: (municipalityId: string) => `/${municipalityId}/checklist`,
     type: "page",
   },
+  {
+    tab: "shops",
+    icon: "🛒",
+    title: "生活インフラガイド",
+    description: "スーパー・ドラッグのポイント戦略を比較",
+    activeColor: "text-orange-600",
+    activeBg: "bg-orange-50 border border-orange-200",
+    href: (municipalityId: string) => `/${municipalityId}/shops`,
+    type: "page",
+  },
 ];
 
 function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
@@ -59,11 +69,13 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const pathname = usePathname();
   const activeTab = searchParams.get("tab") ?? "nursery";
 
-  // チェックリストページかどうか
+  // サブページの判定
   const isChecklistPage = pathname?.endsWith("/checklist") ?? false;
+  const isShopsPage = pathname?.endsWith("/shops") ?? false;
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
+    if (isShopsPage) return item.tab === "shops";
     return item.type === "tab" && activeTab === item.tab;
   };
 

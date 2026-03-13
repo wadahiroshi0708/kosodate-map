@@ -201,6 +201,64 @@ export interface MunicipalityChecklist {
   personas: PersonaChecklist[];
 }
 
+/** 生活インフラ：ショップカテゴリ */
+export interface ShopCategory {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+/** ポイントシステム情報 */
+export interface PointSystem {
+  name: string;
+  color: string;
+  rate: string;
+  redemption: string;
+  special_days: string;
+  app: string;
+  card_required: boolean;
+}
+
+/** ペルソナ別おすすめ度 */
+export interface PersonaFit {
+  stars: number;
+  reason: string;
+}
+
+/** ショップ情報 */
+export interface Shop {
+  id: string;
+  name: string;
+  category: string;
+  chain: string;
+  address: string;
+  hours: string;
+  closed: string;
+  location: Location | null;
+  geocoded: boolean;
+  point_system: PointSystem;
+  features: string[];
+  persona_fit: Record<string, PersonaFit>;
+  notes: string;
+}
+
+/** ペルソナ別ポイント戦略 */
+export interface PointStrategy {
+  persona: string;
+  title: string;
+  icon: string;
+  tips: string[];
+  recommended_combo: string;
+}
+
+/** 自治体のショップデータ全体 */
+export interface MunicipalityShops {
+  municipality_id: string;
+  categories: ShopCategory[];
+  shops: Shop[];
+  point_strategy: PointStrategy[];
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

@@ -1,0 +1,262 @@
+{
+  "municipality_id": "soja",
+  "categories": [
+    { "id": "supermarket", "label": "スーパー", "icon": "🛒" },
+    { "id": "drugstore",   "label": "ドラッグストア", "icon": "💊" },
+    { "id": "homecenter",  "label": "ホームセンター", "icon": "🔨" },
+    { "id": "100yen",      "label": "100均", "icon": "💴" }
+  ],
+  "point_strategy": [
+    {
+      "persona": "dual-income",
+      "title": "共働き世帯の最強コンボ",
+      "icon": "👨‍👩‍👦",
+      "tips": [
+        "ハローズアプリを入れてクーポンをチェック。火曜日の夕方買いが◎",
+        "コスモス薬品は価格が安い反面ポイントなし。まとめ買い専用と割り切る",
+        "ツルハのdポイントはドコモ以外でも貯まる。Amazonや日常生活でも使える"
+      ],
+      "recommended_combo": "ハローズ（食料）＋ ツルハドラッグ（日用品・ポイント重視）"
+    },
+    {
+      "persona": "stay-at-home",
+      "title": "専業主婦・主夫のポイント最大化",
+      "icon": "👩‍👧",
+      "tips": [
+        "ハローズの火曜5%OFFは1週間分まとめ買いのチャンス",
+        "イオンカードを作るとマルナカでWAON還元率が2倍になる",
+        "マツキヨはLINEポイントと連携。LINEカードと合わせて最大3%還元"
+      ],
+      "recommended_combo": "ハローズ（主食材）＋ マルナカ（イオンカード連携）＋ マツキヨ（LINEポイント）"
+    },
+    {
+      "persona": "single-parent",
+      "title": "ひとり親のコスト最優先",
+      "icon": "👤",
+      "tips": [
+        "コスモス薬品はポイントなし＝その分毎日が安い。日用品の定価比で20〜30%安いことも",
+        "ハローズのプライベートブランドは品質が高く低価格。節約の柱にできる",
+        "ポイントカードは1〜2枚に絞る。管理コストより節約効果を優先"
+      ],
+      "recommended_combo": "コスモス薬品（日用品・毎日安い）＋ ハローズ（食料・PB活用）"
+    }
+  ],
+  "shops": [
+    {
+      "id": "harrows-soja",
+      "name": "ハローズ 総社店",
+      "category": "supermarket",
+      "chain": "ハローズ",
+      "address": "岡山県総社市中央1丁目付近",
+      "hours": "9:00〜22:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.669800, "lng": 133.741200 },
+      "geocoded": true,
+      "point_system": {
+        "name": "ハロー！ポイント",
+        "color": "#e8380d",
+        "rate": "200円で1P（1P=1円相当）",
+        "redemption": "1,000P=500円引き",
+        "special_days": "毎週火曜：お客様感謝デー（5%OFF）",
+        "app": "ハローズアプリ（クーポン・電子レシート）",
+        "card_required": false
+      },
+      "features": ["低価格PBあり", "惣菜充実", "駐車場広い", "24時間ATM"],
+      "persona_fit": {
+        "dual-income":   { "stars": 5, "reason": "火曜夕方の惣菜が充実。まとめ買い大容量商品多数。帰宅途中に寄りやすい" },
+        "stay-at-home":  { "stars": 4, "reason": "火曜5%OFFを活用すれば月数百円の節約。平日ゆっくり買い物できる" },
+        "single-parent": { "stars": 5, "reason": "PBブランドが安くて品質良し。アプリクーポンでさらに節約できる" }
+      },
+      "notes": "岡山・広島・香川に展開するスーパー。価格の安さと惣菜の充実度が強み。"
+    },
+    {
+      "id": "marunaka-soja",
+      "name": "マルナカ 総社店",
+      "category": "supermarket",
+      "chain": "マルナカ（イオングループ）",
+      "address": "岡山県総社市総社付近",
+      "hours": "9:00〜21:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.671500, "lng": 133.743800 },
+      "geocoded": true,
+      "point_system": {
+        "name": "WAONポイント",
+        "color": "#e60012",
+        "rate": "200円で1P（WAON支払い）",
+        "redemption": "1P=1円相当、イオン系列で使える",
+        "special_days": "毎月5・15・25日：お客様感謝デー（5%OFF）",
+        "app": "イオンウォレット / WAONアプリ",
+        "card_required": false
+      },
+      "features": ["イオンカード連携", "ネットスーパー対応", "おむつ定期購入割引", "駐車場広い"],
+      "persona_fit": {
+        "dual-income":   { "stars": 5, "reason": "ネットスーパーが使える。イオンカードで還元率アップ。おむつなど重い商品の配送に◎" },
+        "stay-at-home":  { "stars": 5, "reason": "5・15・25日の5%OFFを活用。イオンカードを作ると食料品がさらにお得" },
+        "single-parent": { "stars": 3, "reason": "価格帯はやや高め。ただしイオンシネマ割引など生活を豊かにする特典も" }
+      },
+      "notes": "イオングループのスーパー。WAONポイントはイオン系列どこでも使える汎用性が強み。"
+    },
+    {
+      "id": "eviry-soja",
+      "name": "エブリィ 総社店",
+      "category": "supermarket",
+      "chain": "エブリィ",
+      "address": "岡山県総社市内",
+      "hours": "9:00〜21:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.673000, "lng": 133.752000 },
+      "geocoded": false,
+      "point_system": {
+        "name": "エブリィポイント",
+        "color": "#00913a",
+        "rate": "200円で1P",
+        "redemption": "1,000P=500円引き（エブリィ店内）",
+        "special_days": "毎週水曜：お客様感謝デー（ポイント2倍）",
+        "app": "エブリィアプリ（チラシ・ポイント確認）",
+        "card_required": false
+      },
+      "features": ["地場野菜充実", "お惣菜", "産地直売コーナー"],
+      "persona_fit": {
+        "dual-income":   { "stars": 3, "reason": "水曜ポイント2倍を狙えれば還元率アップ。地場野菜が新鮮" },
+        "stay-at-home":  { "stars": 4, "reason": "地元産の新鮮野菜が充実。子どもに地産地消の食材を使いたい方に" },
+        "single-parent": { "stars": 3, "reason": "価格は平均的。地場野菜の安さは魅力。エブリィポイントは貯めやすい" }
+      },
+      "notes": "岡山県に強い地場スーパー。地元産野菜の品揃えが豊富。※店舗情報要確認"
+    },
+    {
+      "id": "tsuruha-soja",
+      "name": "ツルハドラッグ 総社店",
+      "category": "drugstore",
+      "chain": "ツルハドラッグ",
+      "address": "岡山県総社市内",
+      "hours": "9:00〜21:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.667500, "lng": 133.742500 },
+      "geocoded": false,
+      "point_system": {
+        "name": "dポイント",
+        "color": "#e60012",
+        "rate": "100円で1P（dポイントカード提示）",
+        "redemption": "1P=1円相当、ドコモ・d払い・マクドなど広範囲で使える",
+        "special_days": "毎月1日・15日：dポイント5倍デー",
+        "app": "dポイントクラブアプリ",
+        "card_required": false
+      },
+      "features": ["調剤薬局併設", "ベビー用品充実", "ポイント高還元", "セルフレジあり"],
+      "persona_fit": {
+        "dual-income":   { "stars": 5, "reason": "dポイントはAmazonでも使える。日用品・おむつ・ベビー用品のまとめ買いで高還元" },
+        "stay-at-home":  { "stars": 5, "reason": "調剤薬局が併設。子どもの薬をもらいながらついで買いが効率的。ベビー用品コーナーが充実" },
+        "single-parent": { "stars": 4, "reason": "dポイントの汎用性が高い。コンビニやスーパーでも使えるため生活費全体で節約" }
+      },
+      "notes": "北海道発のドラッグストアチェーン。dポイントとの連携が強く、ドコモ以外でも活用可能。"
+    },
+    {
+      "id": "cosmos-soja",
+      "name": "コスモス薬品 総社店",
+      "category": "drugstore",
+      "chain": "コスモス薬品",
+      "address": "岡山県総社市内",
+      "hours": "9:00〜22:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.665000, "lng": 133.745000 },
+      "geocoded": false,
+      "point_system": {
+        "name": "ポイントなし（EDLP）",
+        "color": "#555555",
+        "rate": "ポイント制度なし",
+        "redemption": "その分、毎日の価格が安い（EDLP方式）",
+        "special_days": "セール日なし（常時低価格）",
+        "app": "コスモスアプリ（チラシ確認のみ）",
+        "card_required": false
+      },
+      "features": ["食料品も扱う", "EDLP（常時最安値）", "大容量商品充実", "駐車場広い"],
+      "persona_fit": {
+        "dual-income":   { "stars": 3, "reason": "大容量日用品をまとめ買いする拠点として活用。ポイントより価格で勝負" },
+        "stay-at-home":  { "stars": 3, "reason": "ポイント活用派には物足りないが、洗剤・シャンプーなどの消耗品は確実に安い" },
+        "single-parent": { "stars": 5, "reason": "ポイントを気にせず毎日安い。日用品の定価比20〜30%安いことも多い。コスト最優先に最適" }
+      },
+      "notes": "九州発のドラッグストア。ポイント制度をなくし毎日低価格を実現するEDLP戦略が特徴。食料品も安い。"
+    },
+    {
+      "id": "matsukiyo-soja",
+      "name": "マツキヨ 総社店",
+      "category": "drugstore",
+      "chain": "マツモトキヨシ",
+      "address": "岡山県総社市内",
+      "hours": "10:00〜21:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.668200, "lng": 133.739800 },
+      "geocoded": false,
+      "point_system": {
+        "name": "matsukiyo LABOポイント ＋ LINEポイント",
+        "color": "#00b900",
+        "rate": "100円で1P（マツキヨポイント）＋ LINEカードで追加P",
+        "redemption": "1P=1円相当（マツキヨ店内）、LINEポイントはLINEPay・PayPayに変換可",
+        "special_days": "毎月20日：ポイント5倍デー",
+        "app": "マツキヨアプリ＋LINE連携",
+        "card_required": false
+      },
+      "features": ["LINEポイント連携", "コスメ充実", "プライベートブランド充実", "オンライン注文可"],
+      "persona_fit": {
+        "dual-income":   { "stars": 3, "reason": "LINEポイントをすでに活用している方に◎。日常的なLINEペイ払いと相性が良い" },
+        "stay-at-home":  { "stars": 5, "reason": "LINEポイントがLINEPay等に変換可。毎月20日の5倍デーに合わせてまとめ買いすると効率的" },
+        "single-parent": { "stars": 3, "reason": "LINEはすでに使っている方が多く、ポイントが自然に貯まる。PBの日用品が安い" }
+      },
+      "notes": "LINE連携が最も進んでいるドラッグストア。LINEポイントは幅広いサービスで使え汎用性◎。"
+    },
+    {
+      "id": "komeri-soja",
+      "name": "コメリ 総社店",
+      "category": "homecenter",
+      "chain": "コメリ",
+      "address": "岡山県総社市内",
+      "hours": "8:30〜20:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.680000, "lng": 133.755000 },
+      "geocoded": false,
+      "point_system": {
+        "name": "コメリカード",
+        "color": "#e60012",
+        "rate": "500円で1P（コメリカード）",
+        "redemption": "1P=1円相当、コメリ店内で使える",
+        "special_days": "特定月に会員限定セール",
+        "app": "コメリアプリ（チラシ・ポイント確認）",
+        "card_required": true
+      },
+      "features": ["農業・園芸用品充実", "DIY工具", "ペット用品", "防災用品"],
+      "persona_fit": {
+        "dual-income":   { "stars": 3, "reason": "転入後の家の修繕・棚取り付けなどのDIYに。工具から収納まで一式揃う" },
+        "stay-at-home":  { "stars": 4, "reason": "家庭菜園・ガーデニングの道具が充実。子どもと一緒に家庭菜園を始めるのも◎" },
+        "single-parent": { "stars": 3, "reason": "家の修繕を業者に頼まずDIYで節約する際に活用。工具の品揃えが良い" }
+      },
+      "notes": "新潟発のホームセンター。農業用品と一般日用品の品揃えが豊富。"
+    },
+    {
+      "id": "daiso-soja",
+      "name": "ダイソー 総社店",
+      "category": "100yen",
+      "chain": "ダイソー",
+      "address": "岡山県総社市内",
+      "hours": "10:00〜20:00",
+      "closed": "年中無休",
+      "location": { "lat": 34.667000, "lng": 133.743000 },
+      "geocoded": false,
+      "point_system": {
+        "name": "ポイントなし",
+        "color": "#555555",
+        "rate": "ポイント制度なし",
+        "redemption": "100円〜300円の均一価格",
+        "special_days": "なし",
+        "app": "ダイソーアプリ（商品検索）",
+        "card_required": false
+      },
+      "features": ["転入準備グッズ充実", "キッチン用品", "子供用品", "文房具"],
+      "persona_fit": {
+        "dual-income":   { "stars": 5, "reason": "転入直後の生活立ち上げに必須。収納グッズ・キッチン用品を低コストで揃えられる" },
+        "stay-at-home":  { "stars": 5, "reason": "子どものおもちゃ・工作材料・料理グッズが豊富。毎月訪問したくなる品揃え" },
+        "single-parent": { "stars": 5, "reason": "コストを最小限に生活を整えるのに最適。子供グッズ・収納用品を安価に揃えられる" }
+      },
+      "notes": "転入直後の生活用品の調達拠点として全ペルソナに強くおすすめ。まず最初に立ち寄るべき店。"
+    }
+  ]
+}
