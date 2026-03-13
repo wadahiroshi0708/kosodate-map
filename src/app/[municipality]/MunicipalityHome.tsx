@@ -56,10 +56,12 @@ export default function MunicipalityHome({
   const searchParams = useSearchParams();
   const activeTab = (searchParams.get("tab") as TabType | null) ?? "nursery";
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+  const [selectedAge, setSelectedAge] = useState<number | null>(null);
 
-  // タブが clinic 以外に変わったら診療科フィルターをリセット
+  // タブ切り替え時にフィルターをリセット
   useEffect(() => {
     if (activeTab !== "clinic") setSelectedDepartment(null);
+    if (activeTab !== "nursery") setSelectedAge(null);
   }, [activeTab]);
 
   const defaultCenter: Location = {
@@ -84,10 +86,20 @@ export default function MunicipalityHome({
     return clinics.filter((c) => c.departments.includes(selectedDepartment));
   }, [clinics, selectedDepartment]);
 
+  // 年齢フィルター適用後の保育施設一覧
+  const filteredNurseries = useMemo(() => {
+    if (selectedAge === null) return nurseries;
+    return nurseries.filter((n) => {
+      const ageKey = `age_${selectedAge}` as keyof typeof n.availability;
+      const status = n.availability[ageKey];
+      return status === "○" || status === "△";
+    });
+  }, [nurseries, selectedAge]);
+
   const rankedNurseries = useMemo(() => {
     if (!userLocation) return null;
-    return rankNurseriesByDistance(nurseries, userLocation);
-  }, [nurseries, userLocation]);
+    return rankNurseriesByDistance(filteredNurseries, userLocation);
+  }, [filteredNurseries, userLocation]);
 
   const rankedClinics = useMemo(() => {
     if (!userLocation) return null;
@@ -150,45 +162,93 @@ export default function MunicipalityHome({
       {/* 保育施設タブ */}
       {activeTab === "nursery" && (
         <div>
-          <div className="flex items-center justify-between mb-3">
+          {/* 年齢フィルター */}
+          <div className="overflow-x-auto pb-2 -mx-4 px-4">
+            <div className="flex gap-2 min-w-max">
+              <button
+                onClick={() => setSelectedAge(null)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  selectedAge === null
+                    ? "bg-[#2d9e6b] text-white shadow-sm"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                すべて ({nurseries.length})
+              </button>
+              {[0, 1, 2, 3, 4, 5].map((age) => {
+                const ageKey = `age_${age}` as keyof typeof nurseries[0]["availability"];
+                const count = nurseries.filter((n) => {
+                  const s = n.availability[ageKey];
+                  return s === "○" || s === "△";
+                }).length;
+                return (
+                  <button
+                    key={age}
+                    onClick={() => setSelectedAge(age === selectedAge ? null : age)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                      selectedAge === age
+                        ? "bg-[#2d9e6b] text-white shadow-sm"
+                        : count > 0
+                        ? "bg-green-50 text-green-700 border border-green-200"
+                        : "bg-gray-100 text-gray-400"
+                    }`}
+                  >
+                    {age}歳 ({count})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between mt-3 mb-3">
             <h3 className="text-sm font-bold text-gray-900">
               {userLocation ? "🏆 近い順ランキング" : "📋 保育施設一覧"}
+              {selectedAge !== null && (
+                <span className="ml-1 text-[#2d9e6b]">· {selectedAge}歳の空きあり</span>
+              )}
             </h3>
-            <span className="text-xs text-gray-400">{nurseries.length}件</span>
+            <span className="text-xs text-gray-400">{filteredNurseries.length}件</span>
           </div>
-          <div className="space-y-3">
-            {userLocation && rankedNurseries ? (
-              rankedNurseries.map((nursery, index) => (
-                <NurseryCard
-                  key={nursery.id}
-                  nursery={nursery}
-                  rank={index + 1}
-                  municipalityId={municipality.id}
-                  transportMode={transportMode}
-                />
-              ))
-            ) : (
-              nurseries.map((nursery, index) => {
-                const withDistance = {
-                  ...nursery,
-                  distance_km: 0,
-                  distance_text: "−",
-                  walk_minutes: 0,
-                  bike_minutes: 0,
-                  car_minutes: 0,
-                };
-                return (
+
+          {filteredNurseries.length === 0 ? (
+            <div className="text-center py-8 text-gray-400 text-sm">
+              {selectedAge}歳の空きがある施設は現在ありません
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {userLocation && rankedNurseries ? (
+                rankedNurseries.map((nursery, index) => (
                   <NurseryCard
                     key={nursery.id}
-                    nursery={withDistance}
+                    nursery={nursery}
                     rank={index + 1}
                     municipalityId={municipality.id}
                     transportMode={transportMode}
                   />
-                );
-              })
-            )}
-          </div>
+                ))
+              ) : (
+                filteredNurseries.map((nursery, index) => {
+                  const withDistance = {
+                    ...nursery,
+                    distance_km: 0,
+                    distance_text: "−",
+                    walk_minutes: 0,
+                    bike_minutes: 0,
+                    car_minutes: 0,
+                  };
+                  return (
+                    <NurseryCard
+                      key={nursery.id}
+                      nursery={withDistance}
+                      rank={index + 1}
+                      municipalityId={municipality.id}
+                      transportMode={transportMode}
+                    />
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
       )}
 
