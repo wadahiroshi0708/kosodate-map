@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
@@ -10,6 +10,7 @@ import ClinicCard from "@/components/clinic/ClinicCard";
 import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
 import AddressInput from "@/components/common/AddressInput";
+import { track, updateLocation } from "@/lib/analytics/tracker";
 
 // Leafletはクライアントのみでロード（SSR無効化）
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
@@ -108,7 +109,71 @@ export default function MunicipalityHome({
 
   const handleLocationSet = useCallback((location: Location) => {
     setUserLocation(location);
+    // ユーザー位置をトラッカーに反映（H3インデックス計算に使用）
+    updateLocation(location.lat, location.lng);
   }, []);
+
+  // ===================================
+  // トラッキング: 初回マウント（セッション開始は AnalyticsProvider が担当）
+  // ===================================
+  const isFirstRender = useRef(true);
+
+  // 保育施設タブ: 年齢フィルター変更 → searchイベント
+  useEffect(() => {
+    if (isFirstRender.current) return;
+    if (activeTab !== "nursery") return;
+    track("search", {
+      query: null,
+      facility_categories: ["保育施設"],
+      age_filter_months: selectedAge !== null ? selectedAge * 12 : null,
+      commute_mode: transportMode,
+      target_municipality_id: municipality.id,
+      is_cross_municipality: false,
+      result_count: filteredNurseries.length,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAge]);
+
+  // 医療機関タブ: 診療科フィルター変更 → searchイベント
+  useEffect(() => {
+    if (isFirstRender.current) return;
+    if (activeTab !== "clinic") return;
+    track("search", {
+      query: selectedDepartment,
+      facility_categories: ["医療機関"],
+      age_filter_months: null,
+      commute_mode: transportMode,
+      target_municipality_id: municipality.id,
+      is_cross_municipality: false,
+      result_count: filteredClinics.length,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDepartment]);
+
+  // タブ切り替え → searchイベント（タブ変更 = 情報収集意図の変化）
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const categoryMap: Record<string, string[]> = {
+      nursery: ["保育施設"],
+      clinic:  ["医療機関"],
+      gov:     ["行政支援"],
+    };
+    track("search", {
+      query: null,
+      facility_categories: categoryMap[activeTab] ?? [],
+      age_filter_months: null,
+      commute_mode: null,
+      target_municipality_id: municipality.id,
+      is_cross_municipality: false,
+      result_count: activeTab === "nursery" ? nurseries.length
+                  : activeTab === "clinic"  ? clinics.length
+                  : govSupports.length,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
 
   // 行政サポートをカテゴリ順にグルーピング
   const govSupportsByCategory = useMemo(() => {
@@ -362,7 +427,11 @@ export default function MunicipalityHome({
               </h3>
               <div className="space-y-2">
                 {items.map((support) => (
-                  <GovSupportCard key={support.id} support={support} />
+                  <GovSupportCard
+                    key={support.id}
+                    support={support}
+                    municipalityId={municipality.id}
+                  />
                 ))}
               </div>
             </div>

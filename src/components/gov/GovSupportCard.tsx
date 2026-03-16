@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { GovSupport, GovSupportCategory } from "@/lib/data/types";
+import { track } from "@/lib/analytics/tracker";
 
 interface GovSupportCardProps {
   support: GovSupport;
+  municipalityId: string;
 }
 
 const CATEGORY_STYLES: Record<GovSupportCategory, { bg: string; text: string; icon: string }> = {
@@ -17,15 +19,42 @@ const CATEGORY_STYLES: Record<GovSupportCategory, { bg: string; text: string; ic
   "障害児支援":   { bg: "bg-gray-100",  text: "text-gray-700",  icon: "🤝" },
 };
 
-export default function GovSupportCard({ support }: GovSupportCardProps) {
+export default function GovSupportCard({ support, municipalityId }: GovSupportCardProps) {
   const [expanded, setExpanded] = useState(false);
   const style = CATEGORY_STYLES[support.category];
+  const openedAt = useRef<number | null>(null);
+
+  const handleToggle = () => {
+    if (!expanded) {
+      // 展開: 閲覧開始時刻を記録
+      openedAt.current = Date.now();
+      track("subsidy_view", {
+        subsidy_id:             support.id,
+        subsidy_category:       support.category,
+        target_municipality_id: municipalityId,
+        is_cross_municipality:  false,
+        view_duration_sec:      0,   // 展開時は0、閉じる時に実時間を送る
+      });
+    } else if (openedAt.current !== null) {
+      // 折りたたみ: 閲覧時間を計測して送信
+      const durationSec = Math.floor((Date.now() - openedAt.current) / 1000);
+      track("subsidy_view", {
+        subsidy_id:             support.id,
+        subsidy_category:       support.category,
+        target_municipality_id: municipalityId,
+        is_cross_municipality:  false,
+        view_duration_sec:      durationSec,
+      });
+      openedAt.current = null;
+    }
+    setExpanded(!expanded);
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       {/* ヘッダー */}
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={handleToggle}
         className="w-full text-left p-4"
       >
         <div className="flex items-start gap-3">
