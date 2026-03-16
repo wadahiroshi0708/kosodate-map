@@ -300,3 +300,53 @@ export const TRANSPORT_SPEEDS: Record<TransportMode, number> = {
   bike: 12,
   car: 30,
 };
+
+// ===================================
+// お譲り (Giveaway) 機能
+// ===================================
+
+export type GiveawayCategory = "kids_clothes" | "toys" | "baby_goods";
+
+export const GIVEAWAY_CATEGORY_LABELS: Record<GiveawayCategory, { icon: string; label: string }> = {
+  kids_clothes: { icon: "👕", label: "子ども服" },
+  toys:         { icon: "🧸", label: "おもちゃ" },
+  baby_goods:   { icon: "🍼", label: "ベビー用品" },
+};
+
+export type GiveawayCondition = "new" | "good" | "fair";
+
+export const GIVEAWAY_CONDITION_LABELS: Record<GiveawayCondition, string> = {
+  new:  "新品・未使用",
+  good: "目立った傷なし",
+  fair: "使用感あり",
+};
+
+export const GIVEAWAY_AGE_RANGES = ["0-1歳", "2-3歳", "4-6歳", "小学生〜"] as const;
+
+export interface GiveawayItem {
+  id: string;
+  municipalityId: string;
+  lineUserId: string;
+  displayName: string;
+  title: string;
+  description: string | null;
+  category: GiveawayCategory;
+  ageRange: string | null;
+  condition: GiveawayCondition | null;
+  imageUrl: string | null;
+  facilityId: string | null;
+  facilityName: string | null;
+  status: "available" | "reserved" | "completed" | "cancelled";
+  requestCount?: number;
+  createdAt: string;
+}
+
+export interface GiveawayRequest {
+  id: string;
+  itemId: string;
+  requesterLineUserId: string;
+  requesterDisplayName: string;
+  message: string | null;
+  status: "pending" | "accepted" | "rejected";
+  createdAt: string;
+}

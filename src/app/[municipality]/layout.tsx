@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { dataRepository } from "@/lib/data/json-adapter";
 import AppHeader from "@/components/layout/AppHeader";
+import AnalyticsProvider from "@/components/providers/AnalyticsProvider";
 
 interface MunicipalityLayoutProps {
   children: React.ReactNode;
@@ -24,12 +25,14 @@ export default async function MunicipalityLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f9fc]">
-      <AppHeader
-        municipalityName={municipality.name_ja}
-        municipalityId={municipalityId}
-      />
-      <main className="max-w-lg mx-auto">{children}</main>
-    </div>
+    <AnalyticsProvider municipalityId={municipalityId}>
+      <div className="min-h-screen bg-[#f7f9fc]">
+        <AppHeader
+          municipalityName={municipality.name_ja}
+          municipalityId={municipalityId}
+        />
+        <main className="max-w-lg mx-auto">{children}</main>
+      </div>
+    </AnalyticsProvider>
   );
 }

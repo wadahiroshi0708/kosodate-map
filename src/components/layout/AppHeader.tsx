@@ -63,6 +63,16 @@ const NAV_ITEMS = [
     type: "page",
   },
   {
+    tab: "giveaway",
+    icon: "🎁",
+    title: "お譲り",
+    description: "子ども用品を譲り合えるマッチング",
+    activeColor: "text-[#e05a8c]",
+    activeBg: "bg-pink-50 border border-pink-200",
+    href: (municipalityId: string) => `/${municipalityId}/giveaway`,
+    type: "page",
+  },
+  {
     tab: "community",
     icon: "🤝",
     title: "コミュニティ",
@@ -84,11 +94,13 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   // サブページの判定
   const isChecklistPage  = pathname?.endsWith("/checklist")  ?? false;
   const isShopsPage      = pathname?.endsWith("/shops")       ?? false;
+  const isGiveawayPage   = pathname?.includes("/giveaway")    ?? false;
   const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
     if (isShopsPage)     return item.tab === "shops";
+    if (isGiveawayPage)  return item.tab === "giveaway";
     if (isCommunityPage) return item.tab === "community";
     return item.type === "tab" && activeTab === item.tab;
   };
