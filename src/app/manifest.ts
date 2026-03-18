@@ -1,0 +1,25 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "こそだてマップ",
+    short_name: "こそだてMAP",
+    description: "引越し前から使える保育園・子育て情報。住所が決まったその日から。",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#f7f9fc",
+    theme_color: "#4CAF82",
+    icons: [
+      {
+        src: "/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
+  };
+}
