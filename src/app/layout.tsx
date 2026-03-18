@@ -3,12 +3,13 @@ import "./globals.css";
 import LiffProvider from "@/components/providers/LiffProvider";
 
 export const metadata: Metadata = {
-  title: "こそだてマップ - 転居先の子育て情報をワンストップで",
+  title: "こそだてマップ｜引越し前から使える保育園・子育て情報",
   description:
-    "転居した子育て世代のための保育園検索・かかりつけ医・行政支援情報サービス。通園距離でランキング、空き状況もひと目でわかります。",
+    "引越し先の保育園の空き状況・子育て施設をまとめて確認。住所が決まったその日から使えます。総社市など岡山県内の子育て情報。",
+  keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", "総社市", "岡山", "転入"],
   openGraph: {
-    title: "こそだてマップ",
-    description: "転居先の子育て情報をワンストップで",
+    title: "こそだてマップ｜引越し前から使える保育園・子育て情報",
+    description: "引越し先の保育園の空き状況・子育て施設をまとめて確認。住所が決まったその日から使えます。",
     type: "website",
   },
 };
