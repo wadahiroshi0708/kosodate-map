@@ -472,19 +472,21 @@ export default function MunicipalityHome({
         </ul>
       </div>
 
-      {/* 問い合わせ先 */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-        <p className="text-xs text-gray-500 mb-1">保育施設に関するお問い合わせ</p>
-        <p className="text-sm font-semibold text-gray-700">
-          {municipality.contact.department}
-        </p>
-        <a
-          href={`tel:${municipality.contact.phone}`}
-          className="inline-block mt-2 bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
-        >
-          📞 {municipality.contact.phone}
-        </a>
-      </div>
+      {/* 問い合わせ先（保育施設タブのみ表示） */}
+      {activeTab === "nursery" && (
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
+          <p className="text-xs text-gray-500 mb-1">保育施設に関するお問い合わせ</p>
+          <p className="text-sm font-semibold text-gray-700">
+            {municipality.contact.department}
+          </p>
+          <a
+            href={`tel:${municipality.contact.phone}`}
+            className="inline-block mt-2 bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
+          >
+            📞 {municipality.contact.phone}
+          </a>
+        </div>
+      )}
     </div>
   );
 }

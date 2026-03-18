@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# AI検索エンジンのロボットを明示的に許可
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://kosodate-map.vercel.app/sitemap.xml
