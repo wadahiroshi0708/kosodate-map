@@ -208,6 +208,7 @@ export default function MunicipalityHome({
       {showOnboarding && (
         <OnboardingModal
           municipalityName={municipality.name_ja}
+          municipalityId={municipality.id}
           onClose={() => setShowOnboarding(false)}
         />
       )}
