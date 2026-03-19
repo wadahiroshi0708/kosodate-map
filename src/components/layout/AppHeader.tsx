@@ -191,7 +191,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
             </div>
 
             {/* ナビゲーション */}
-            <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
+            <nav className="flex-1 min-h-0 px-4 py-4 space-y-2 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
               <p className="text-xs text-gray-400 font-medium px-1 mb-3">カテゴリ</p>
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item);
