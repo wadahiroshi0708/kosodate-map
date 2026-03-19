@@ -16,6 +16,7 @@
               "id": "di-u-1",
               "text": "転入届を市役所に提出",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可"
             },
@@ -23,6 +24,7 @@
               "id": "di-u-2",
               "text": "児童手当を申請",
               "deadline": "転入後15日以内",
+              "days_from_moving": 15,
               "urgency": "high",
               "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
             },
@@ -30,6 +32,7 @@
               "id": "di-u-3",
               "text": "こども医療費受給資格証を申請",
               "deadline": "早めに申請",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く"
             },
@@ -37,6 +40,7 @@
               "id": "di-u-4",
               "text": "保育園・認定こども園に入所申込み",
               "deadline": "4月入所は前年10〜11月頃締め切り",
+              "days_from_moving": null,
               "urgency": "high",
               "note": "途中入所は空き次第随時受付。市の保育課（0866-92-8204）に要確認"
             }
@@ -50,6 +54,7 @@
               "id": "di-a-1",
               "text": "マイナンバーカードの住所変更",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き。暗証番号が必要"
             },
@@ -57,6 +62,7 @@
               "id": "di-a-2",
               "text": "国民健康保険または職場の保険証の切り替え",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "職場の健保組合に転居を連絡。子どもを扶養として追加手続きも"
             },
@@ -64,6 +70,7 @@
               "id": "di-a-3",
               "text": "子どもの健康保険証を受け取る",
               "deadline": "保険証切り替え後",
+              "days_from_moving": 21,
               "urgency": "medium",
               "note": "医療機関受診前に必ず確認"
             },
@@ -71,6 +78,7 @@
               "id": "di-a-4",
               "text": "保育の必要性の認定（2号・3号認定）を申請",
               "deadline": "保育園申込みと同時",
+              "days_from_moving": null,
               "urgency": "medium",
               "note": "就労証明書が必要。勤務先に早めに依頼"
             }
@@ -84,6 +92,7 @@
               "id": "di-c-1",
               "text": "気になる保育施設を見学予約",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "medium",
               "note": "各施設に直接電話。複数を比較して決めるのがおすすめ"
             },
@@ -91,6 +100,7 @@
               "id": "di-c-2",
               "text": "幼稚園（3歳以上）の情報を確認",
               "deadline": null,
+              "days_from_moving": null,
               "urgency": "low",
               "note": "2歳児クラスがある園も。保育料は所得に応じた負担"
             },
@@ -98,6 +108,7 @@
               "id": "di-c-3",
               "text": "病児保育施設を確認",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "medium",
               "note": "総社市内に病児保育施設あり。事前登録が必要"
             }
@@ -111,6 +122,7 @@
               "id": "di-l-1",
               "text": "近くのスーパーを確認",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "low",
               "note": "マルナカ・フジグラン・イオン総社店など。営業時間も確認"
             },
@@ -118,6 +130,7 @@
               "id": "di-l-2",
               "text": "ドラッグストアを確認",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
             },
@@ -125,6 +138,7 @@
               "id": "di-l-3",
               "text": "近くの公園・子育て支援センターを確認",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "low",
               "note": "総社市子育て支援センターで情報取得可。子育て相談も無料"
             },
@@ -132,6 +146,7 @@
               "id": "di-l-4",
               "text": "ゴミの分別・収集日カレンダーを入手",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "medium",
               "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる"
             },
@@ -139,6 +154,7 @@
               "id": "di-l-5",
               "text": "総社市公式LINEを友達追加",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "市からのお知らせ・災害情報が届く。@sojaciityで検索"
             }
@@ -161,6 +177,7 @@
               "id": "sh-u-1",
               "text": "転入届を市役所に提出",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可"
             },
@@ -168,6 +185,7 @@
               "id": "sh-u-2",
               "text": "児童手当を申請",
               "deadline": "転入後15日以内",
+              "days_from_moving": 15,
               "urgency": "high",
               "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
             },
@@ -175,6 +193,7 @@
               "id": "sh-u-3",
               "text": "こども医療費受給資格証を申請",
               "deadline": "早めに申請",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く"
             }
@@ -188,6 +207,7 @@
               "id": "sh-a-1",
               "text": "マイナンバーカードの住所変更",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き。暗証番号が必要"
             },
@@ -195,6 +215,7 @@
               "id": "sh-a-2",
               "text": "国民健康保険に加入",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課で手続き。子どもも同時に加入"
             },
@@ -202,6 +223,7 @@
               "id": "sh-a-3",
               "text": "子どもの健康保険証を受け取る",
               "deadline": "保険証切り替え後",
+              "days_from_moving": 21,
               "urgency": "medium",
               "note": "医療機関受診前に必ず確認"
             }
@@ -215,6 +237,7 @@
               "id": "sh-c-1",
               "text": "幼稚園・認定こども園（1号認定）の見学予約",
               "deadline": "入園の前年10〜11月頃が締め切り",
+              "days_from_moving": null,
               "urgency": "medium",
               "note": "3歳（年少）からが多い。2歳児クラスがある園も確認"
             },
@@ -222,6 +245,7 @@
               "id": "sh-c-2",
               "text": "子育て支援センターに登録・訪問",
               "deadline": null,
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "育児相談・親子交流。0〜就学前の子どもと保護者が対象。無料で利用可"
             },
@@ -229,6 +253,7 @@
               "id": "sh-c-3",
               "text": "ファミリー・サポート・センターに会員登録",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "low",
               "note": "会員同士で育児の助け合い。急な用事のときに子どもを預けられる"
             },
@@ -236,6 +261,7 @@
               "id": "sh-c-4",
               "text": "4ヶ月児健康診査・乳幼児健診の日程確認",
               "deadline": null,
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "市から通知が届く。転入後は早めに市の健康増進課に確認"
             }
@@ -249,6 +275,7 @@
               "id": "sh-l-1",
               "text": "近くのスーパーを確認",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "low",
               "note": "マルナカ・フジグラン・イオン総社店など。毎日使うので営業時間も確認"
             },
@@ -256,6 +283,7 @@
               "id": "sh-l-2",
               "text": "ドラッグストアを確認",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
             },
@@ -263,6 +291,7 @@
               "id": "sh-l-3",
               "text": "近くの公園・広場を確認",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "low",
               "note": "総社市内に子ども向け公園が多数。総合公園・こもれびの森など"
             },
@@ -270,6 +299,7 @@
               "id": "sh-l-4",
               "text": "ゴミの分別・収集日カレンダーを入手",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "medium",
               "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる"
             },
@@ -277,6 +307,7 @@
               "id": "sh-l-5",
               "text": "総社市公式LINEを友達追加",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "市からのお知らせ・災害情報が届く"
             },
@@ -284,6 +315,7 @@
               "id": "sh-l-6",
               "text": "地域の子育てサークル・ママ友グループを探す",
               "deadline": null,
+              "days_from_moving": null,
               "urgency": "low",
               "note": "子育て支援センターの掲示板やSNSグループで地域のつながりを作ろう"
             }
@@ -306,6 +338,7 @@
               "id": "sp-u-1",
               "text": "転入届を市役所に提出",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参"
             },
@@ -313,6 +346,7 @@
               "id": "sp-u-2",
               "text": "児童手当を申請",
               "deadline": "転入後15日以内",
+              "days_from_moving": 15,
               "urgency": "high",
               "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
             },
@@ -320,6 +354,7 @@
               "id": "sp-u-3",
               "text": "こども医療費受給資格証を申請",
               "deadline": "早めに申請",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "中学校卒業まで医療費が無料"
             },
@@ -327,6 +362,7 @@
               "id": "sp-u-4",
               "text": "児童扶養手当を申請",
               "deadline": "転入後できるだけ早く",
+              "days_from_moving": 7,
               "urgency": "high",
               "note": "離婚・死別・未婚の一人親が対象。申請月の翌月から支給開始。遡及不可"
             }
@@ -340,6 +376,7 @@
               "id": "sp-s-1",
               "text": "ひとり親家庭医療費助成を申請",
               "deadline": "早めに申請",
+              "days_from_moving": 14,
               "urgency": "high",
               "note": "保護者と子どもの医療費の自己負担が大幅軽減。こども医療費とは別に申請"
             },
@@ -347,6 +384,7 @@
               "id": "sp-s-2",
               "text": "JR通勤定期券割引（母子・父子家庭）を確認",
               "deadline": null,
+              "days_from_moving": null,
               "urgency": "low",
               "note": "JRへの通勤定期が3割引。証明書を市で発行"
             },
@@ -354,6 +392,7 @@
               "id": "sp-s-3",
               "text": "総社市ひとり親支援窓口に相談",
               "deadline": null,
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "受けられる支援を一括で確認できる。生活困窮・就労支援なども相談可"
             },
@@ -361,6 +400,7 @@
               "id": "sp-s-4",
               "text": "就労支援・職業訓練の情報を確認",
               "deadline": null,
+              "days_from_moving": null,
               "urgency": "low",
               "note": "自立支援教育訓練給付金・高等職業訓練促進給付金などあり"
             }
@@ -374,6 +414,7 @@
               "id": "sp-a-1",
               "text": "マイナンバーカードの住所変更",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き"
             },
@@ -381,6 +422,7 @@
               "id": "sp-a-2",
               "text": "国民健康保険または職場の保険証の切り替え",
               "deadline": "転入後14日以内",
+              "days_from_moving": 14,
               "urgency": "medium",
               "note": "子どもを扶養として加入手続きも"
             },
@@ -388,6 +430,7 @@
               "id": "sp-a-3",
               "text": "保育園・認定こども園の申込み",
               "deadline": "4月入所は前年秋が締め切り",
+              "days_from_moving": null,
               "urgency": "high",
               "note": "就労証明書が必要。ひとり親は保育の必要性が高く優先される場合あり"
             }
@@ -401,6 +444,7 @@
               "id": "sp-l-1",
               "text": "近くのスーパーを確認",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "low",
               "note": "まとめ買いできる大型スーパーと近所のコンビニの位置を確認"
             },
@@ -408,6 +452,7 @@
               "id": "sp-l-2",
               "text": "ドラッグストアを確認",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
             },
@@ -415,6 +460,7 @@
               "id": "sp-l-3",
               "text": "近くの公園・子育て支援センターを確認",
               "deadline": null,
+              "days_from_moving": 30,
               "urgency": "low",
               "note": "子育て支援センターでの相談・交流も活用しよう"
             },
@@ -422,6 +468,7 @@
               "id": "sp-l-4",
               "text": "ゴミの分別・収集日カレンダーを入手",
               "deadline": null,
+              "days_from_moving": 3,
               "urgency": "medium",
               "note": "市役所窓口またはWebサイトから入手"
             },
@@ -429,6 +476,7 @@
               "id": "sp-l-5",
               "text": "総社市公式LINEを友達追加",
               "deadline": null,
+              "days_from_moving": 7,
               "urgency": "low",
               "note": "市からのお知らせ・災害情報が届く"
             }

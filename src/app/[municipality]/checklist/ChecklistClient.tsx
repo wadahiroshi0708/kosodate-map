@@ -8,9 +8,28 @@ interface ChecklistClientProps {
   municipalityName: string;
 }
 
-// localStorage のキー
 const PERSONA_KEY = "kosodate_checklist_persona";
 const CHECKED_KEY = "kosodate_checklist_checked";
+const MOVING_DATE_KEY = "kosodate_moving_date";
+
+function formatDate(date: Date): string {
+  return `${date.getMonth() + 1}/${date.getDate()}`;
+}
+
+function getDaysLeft(movingDate: Date, daysFromMoving: number): number {
+  const deadline = new Date(movingDate);
+  deadline.setDate(deadline.getDate() + daysFromMoving);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  deadline.setHours(0, 0, 0, 0);
+  return Math.ceil((deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function getDeadlineDate(movingDate: Date, daysFromMoving: number): string {
+  const deadline = new Date(movingDate);
+  deadline.setDate(deadline.getDate() + daysFromMoving);
+  return `${deadline.getMonth() + 1}月${deadline.getDate()}日まで`;
+}
 
 export default function ChecklistClient({
   checklist,
@@ -18,67 +37,53 @@ export default function ChecklistClient({
 }: ChecklistClientProps) {
   const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const [movingDateStr, setMovingDateStr] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
 
-  // localStorage から復元
   useEffect(() => {
     try {
       const savedPersona = localStorage.getItem(PERSONA_KEY);
       const savedChecked = localStorage.getItem(CHECKED_KEY);
+      const savedDate = localStorage.getItem(MOVING_DATE_KEY);
       if (savedPersona) setSelectedPersonaId(savedPersona);
       if (savedChecked) setCheckedItems(new Set(JSON.parse(savedChecked)));
-    } catch {
-      // localStorage が使えない環境（SSR等）は無視
-    }
+      if (savedDate) setMovingDateStr(savedDate);
+    } catch {}
     setLoaded(true);
   }, []);
 
-  // ペルソナ変更
   const handlePersonaSelect = useCallback((personaId: string) => {
     setSelectedPersonaId(personaId);
-    try {
-      localStorage.setItem(PERSONA_KEY, personaId);
-    } catch {}
+    try { localStorage.setItem(PERSONA_KEY, personaId); } catch {}
   }, []);
 
-  // チェック状態の切り替え
   const handleToggle = useCallback((itemId: string) => {
     setCheckedItems((prev) => {
       const next = new Set(prev);
-      if (next.has(itemId)) {
-        next.delete(itemId);
-      } else {
-        next.add(itemId);
-      }
-      try {
-        localStorage.setItem(CHECKED_KEY, JSON.stringify([...next]));
-      } catch {}
+      if (next.has(itemId)) { next.delete(itemId); } else { next.add(itemId); }
+      try { localStorage.setItem(CHECKED_KEY, JSON.stringify([...next])); } catch {}
       return next;
     });
   }, []);
 
-  // チェックをリセット
   const handleReset = useCallback(() => {
     if (!window.confirm("チェックをすべてリセットしますか？")) return;
     setCheckedItems(new Set());
-    try {
-      localStorage.removeItem(CHECKED_KEY);
-    } catch {}
+    try { localStorage.removeItem(CHECKED_KEY); } catch {}
   }, []);
 
-  const selectedPersona = checklist.personas.find(
-    (p) => p.id === selectedPersonaId
-  );
+  const handleMovingDateChange = useCallback((value: string) => {
+    setMovingDateStr(value);
+    try { localStorage.setItem(MOVING_DATE_KEY, value); } catch {}
+  }, []);
 
-  // 全アイテム数と完了数
+  const movingDate = movingDateStr ? new Date(movingDateStr) : null;
+
+  const selectedPersona = checklist.personas.find((p) => p.id === selectedPersonaId);
   const totalItems = selectedPersona
-    ? selectedPersona.sections.reduce((sum, s) => sum + s.items.length, 0)
-    : 0;
+    ? selectedPersona.sections.reduce((sum, s) => sum + s.items.length, 0) : 0;
   const doneItems = selectedPersona
-    ? selectedPersona.sections
-        .flatMap((s) => s.items)
-        .filter((item) => checkedItems.has(item.id)).length
-    : 0;
+    ? selectedPersona.sections.flatMap((s) => s.items).filter((item) => checkedItems.has(item.id)).length : 0;
   const progress = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
 
   if (!loaded) {
@@ -96,8 +101,24 @@ export default function ChecklistClient({
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <h2 className="text-base font-bold mb-1">転入チェックリスト</h2>
         <p className="text-xs text-green-200">
-          {municipalityName}に転入したらやること。あなたの状況を選んでスタート。
+          {municipalityName}に転入したらやること。転入日を入力するとカウントダウン表示されます。
         </p>
+      </div>
+
+      {/* 転入日入力 */}
+      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+        <p className="text-xs font-semibold text-gray-500 mb-2">📅 転入日（引越し日）</p>
+        <input
+          type="date"
+          value={movingDateStr}
+          onChange={(e) => handleMovingDateChange(e.target.value)}
+          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+        />
+        {movingDate && (
+          <p className="text-xs text-[#2d9e6b] mt-2 font-medium">
+            ✅ {movingDate.getMonth() + 1}月{movingDate.getDate()}日から期限を計算中
+          </p>
+        )}
       </div>
 
       {/* ペルソナ選択 */}
@@ -111,22 +132,14 @@ export default function ChecklistClient({
                 key={persona.id}
                 onClick={() => handlePersonaSelect(persona.id)}
                 className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 transition-all text-center ${
-                  isSelected
-                    ? "border-[#2d9e6b] bg-[#f0faf5] shadow-sm"
-                    : "border-gray-200 bg-white"
+                  isSelected ? "border-[#2d9e6b] bg-[#f0faf5] shadow-sm" : "border-gray-200 bg-white"
                 }`}
               >
                 <span className="text-2xl">{persona.icon}</span>
-                <span
-                  className={`text-xs font-semibold leading-tight ${
-                    isSelected ? "text-[#2d9e6b]" : "text-gray-700"
-                  }`}
-                >
+                <span className={`text-xs font-semibold leading-tight ${isSelected ? "text-[#2d9e6b]" : "text-gray-700"}`}>
                   {persona.label}
                 </span>
-                <span className="text-[10px] text-gray-400 leading-tight">
-                  {persona.description}
-                </span>
+                <span className="text-[10px] text-gray-400 leading-tight">{persona.description}</span>
               </button>
             );
           })}
@@ -149,19 +162,13 @@ export default function ChecklistClient({
             <div className="w-full bg-gray-100 rounded-full h-2">
               <div
                 className="h-2 rounded-full transition-all duration-300"
-                style={{
-                  width: `${progress}%`,
-                  backgroundColor: selectedPersona.color,
-                }}
+                style={{ width: `${progress}%`, backgroundColor: selectedPersona.color }}
               />
             </div>
             <div className="flex items-center justify-between mt-2">
               <span className="text-xs text-gray-400">{progress}% 完了</span>
               {doneItems > 0 && (
-                <button
-                  onClick={handleReset}
-                  className="text-xs text-gray-400 underline"
-                >
+                <button onClick={handleReset} className="text-xs text-gray-400 underline">
                   リセット
                 </button>
               )}
@@ -171,9 +178,7 @@ export default function ChecklistClient({
           {/* セクション別チェックリスト */}
           {selectedPersona.sections.map((section) => (
             <div key={section.id}>
-              <h3 className="text-sm font-bold text-gray-700 mb-2">
-                {section.title}
-              </h3>
+              <h3 className="text-sm font-bold text-gray-700 mb-2">{section.title}</h3>
               <div className="space-y-2">
                 {section.items.map((item) => (
                   <ChecklistItemCard
@@ -182,6 +187,7 @@ export default function ChecklistClient({
                     checked={checkedItems.has(item.id)}
                     onToggle={handleToggle}
                     accentColor={selectedPersona.color}
+                    movingDate={movingDate}
                   />
                 ))}
               </div>
@@ -192,25 +198,16 @@ export default function ChecklistClient({
           {progress === 100 && (
             <div className="bg-[#f0faf5] border border-[#c8ead8] rounded-xl p-4 text-center">
               <p className="text-2xl mb-1">🎉</p>
-              <p className="text-sm font-bold text-[#2d9e6b]">
-                すべての手続きが完了しました！
-              </p>
-              <p className="text-xs text-green-600 mt-1">
-                {municipalityName}での新生活をお楽しみください
-              </p>
+              <p className="text-sm font-bold text-[#2d9e6b]">すべての手続きが完了しました！</p>
+              <p className="text-xs text-green-600 mt-1">{municipalityName}での新生活をお楽しみください</p>
             </div>
           )}
         </>
       ) : (
-        /* 未選択時のガイド */
         <div className="bg-white rounded-xl p-6 text-center border border-gray-100">
           <p className="text-3xl mb-3">☝️</p>
-          <p className="text-sm font-semibold text-gray-600 mb-1">
-            上から家族構成を選んでください
-          </p>
-          <p className="text-xs text-gray-400">
-            あなたに必要な手続き・設定が表示されます
-          </p>
+          <p className="text-sm font-semibold text-gray-600 mb-1">上から家族構成を選んでください</p>
+          <p className="text-xs text-gray-400">あなたに必要な手続き・設定が表示されます</p>
         </div>
       )}
 
@@ -220,40 +217,58 @@ export default function ChecklistClient({
         <ul className="space-y-1 text-yellow-600">
           <li>・ 手続きの期限・内容は変更されることがあります。</li>
           <li>・ 詳細は各窓口に直接ご確認ください。</li>
-          <li>・ チェック状態はこのスマホに保存されます。</li>
+          <li>・ チェック状態・転入日はこのスマホに保存されます。</li>
         </ul>
       </div>
     </div>
   );
 }
 
-// 個別チェックアイテムカード
 function ChecklistItemCard({
   item,
   checked,
   onToggle,
   accentColor,
+  movingDate,
 }: {
   item: ChecklistItem;
   checked: boolean;
   onToggle: (id: string) => void;
   accentColor: string;
+  movingDate: Date | null;
 }) {
   const urgencyBadge: Record<string, { label: string; bg: string; text: string }> = {
     high: { label: "急ぎ", bg: "bg-red-50", text: "text-red-600" },
     medium: { label: "優先", bg: "bg-orange-50", text: "text-orange-600" },
     low: { label: "", bg: "", text: "" },
   };
-
   const badge = urgencyBadge[item.urgency];
+
+  // カウントダウン計算
+  let countdownBadge: { label: string; bg: string; text: string } | null = null;
+  let deadlineDateStr: string | null = null;
+
+  if (movingDate && item.days_from_moving !== null && item.days_from_moving !== undefined) {
+    const daysLeft = getDaysLeft(movingDate, item.days_from_moving);
+    deadlineDateStr = getDeadlineDate(movingDate, item.days_from_moving);
+    if (daysLeft < 0) {
+      countdownBadge = { label: "期限切れ", bg: "bg-gray-100", text: "text-gray-500" };
+    } else if (daysLeft === 0) {
+      countdownBadge = { label: "今日まで！", bg: "bg-red-100", text: "text-red-700" };
+    } else if (daysLeft <= 3) {
+      countdownBadge = { label: `あと${daysLeft}日`, bg: "bg-red-50", text: "text-red-600" };
+    } else if (daysLeft <= 14) {
+      countdownBadge = { label: `あと${daysLeft}日`, bg: "bg-orange-50", text: "text-orange-600" };
+    } else {
+      countdownBadge = { label: `あと${daysLeft}日`, bg: "bg-blue-50", text: "text-blue-600" };
+    }
+  }
 
   return (
     <button
       onClick={() => onToggle(item.id)}
       className={`w-full text-left p-3 rounded-xl border transition-all ${
-        checked
-          ? "bg-gray-50 border-gray-200 opacity-60"
-          : "bg-white border-gray-200 shadow-sm"
+        checked ? "bg-gray-50 border-gray-200 opacity-60" : "bg-white border-gray-200 shadow-sm"
       }`}
     >
       <div className="flex items-start gap-3">
@@ -270,39 +285,33 @@ function ChecklistItemCard({
         {/* テキスト */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span
-              className={`text-sm font-medium ${
-                checked ? "line-through text-gray-400" : "text-gray-800"
-              }`}
-            >
+            <span className={`text-sm font-medium ${checked ? "line-through text-gray-400" : "text-gray-800"}`}>
               {item.text}
             </span>
             {badge.label && (
-              <span
-                className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${badge.bg} ${badge.text}`}
-              >
+              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${badge.bg} ${badge.text}`}>
                 {badge.label}
+              </span>
+            )}
+            {countdownBadge && !checked && (
+              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${countdownBadge.bg} ${countdownBadge.text}`}>
+                {countdownBadge.label}
               </span>
             )}
           </div>
 
-          {item.deadline && (
+          {/* 期限表示 */}
+          {(deadlineDateStr || item.deadline) && (
             <div className="flex items-center gap-1 mt-1">
               <span className="text-[10px] text-gray-400">🗓</span>
-              <span
-                className={`text-[11px] font-semibold ${
-                  item.urgency === "high" ? "text-red-500" : "text-gray-500"
-                }`}
-              >
-                {item.deadline}
+              <span className={`text-[11px] font-semibold ${item.urgency === "high" ? "text-red-500" : "text-gray-500"}`}>
+                {deadlineDateStr ?? item.deadline}
               </span>
             </div>
           )}
 
           {item.note && (
-            <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">
-              {item.note}
-            </p>
+            <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">{item.note}</p>
           )}
         </div>
       </div>

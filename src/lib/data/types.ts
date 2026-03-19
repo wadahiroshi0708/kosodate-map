@@ -174,6 +174,7 @@ export interface ChecklistItem {
   id: string;
   text: string;
   deadline: string | null;
+  days_from_moving: number | null;
   urgency: "high" | "medium" | "low";
   note: string | null;
 }
