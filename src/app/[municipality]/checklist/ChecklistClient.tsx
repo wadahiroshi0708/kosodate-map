@@ -1,19 +1,23 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { MunicipalityChecklist, PersonaChecklist, ChecklistItem } from "@/lib/data/types";
+import { getSupabase } from "@/lib/supabase/client";
+import type { MunicipalityChecklist, ChecklistItem } from "@/lib/data/types";
 
 interface ChecklistClientProps {
   checklist: MunicipalityChecklist;
   municipalityName: string;
 }
 
-const PERSONA_KEY = "kosodate_checklist_persona";
-const CHECKED_KEY = "kosodate_checklist_checked";
-const MOVING_DATE_KEY = "kosodate_moving_date";
+const LOCAL_SHARE_KEY = "kosodate_share_id";
 
-function formatDate(date: Date): string {
-  return `${date.getMonth() + 1}/${date.getDate()}`;
+function getShareIdFromUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  return new URLSearchParams(window.location.search).get("share");
+}
+
+function generateId(): string {
+  return crypto.randomUUID();
 }
 
 function getDaysLeft(movingDate: Date, daysFromMoving: number): number {
@@ -31,54 +35,133 @@ function getDeadlineDate(movingDate: Date, daysFromMoving: number): string {
   return `${deadline.getMonth() + 1}月${deadline.getDate()}日まで`;
 }
 
-export default function ChecklistClient({
-  checklist,
-  municipalityName,
-}: ChecklistClientProps) {
+export default function ChecklistClient({ checklist, municipalityName }: ChecklistClientProps) {
+  const [shareId, setShareId] = useState<string | null>(null);
+  const [isShared, setIsShared] = useState(false); // パートナーのURLで開いているか
+  const [isCopied, setIsCopied] = useState(false);
   const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [movingDateStr, setMovingDateStr] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
+  // Supabaseから読み込み
+  const loadFromSupabase = useCallback(async (id: string) => {
     try {
-      const savedPersona = localStorage.getItem(PERSONA_KEY);
-      const savedChecked = localStorage.getItem(CHECKED_KEY);
-      const savedDate = localStorage.getItem(MOVING_DATE_KEY);
-      if (savedPersona) setSelectedPersonaId(savedPersona);
-      if (savedChecked) setCheckedItems(new Set(JSON.parse(savedChecked)));
-      if (savedDate) setMovingDateStr(savedDate);
-    } catch {}
-    setLoaded(true);
+      const supabase = getSupabase();
+      const { data } = await supabase
+        .from("checklist_sessions")
+        .select("*")
+        .eq("id", id)
+        .single();
+      if (data) {
+        if (data.persona_id) setSelectedPersonaId(data.persona_id);
+        if (data.checked_items) setCheckedItems(new Set(data.checked_items as string[]));
+        if (data.moving_date) setMovingDateStr(data.moving_date);
+      }
+    } catch {
+      // Supabase失敗時はlocalStorageにフォールバック
+    }
   }, []);
+
+  // Supabaseに保存
+  const saveToSupabase = useCallback(async (
+    id: string,
+    updates: { persona_id?: string | null; checked_items?: string[]; moving_date?: string }
+  ) => {
+    try {
+      const supabase = getSupabase();
+      await supabase.from("checklist_sessions").upsert({
+        id,
+        ...updates,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {
+      // サイレントに失敗
+    }
+  }, []);
+
+  useEffect(() => {
+    const urlShareId = getShareIdFromUrl();
+
+    if (urlShareId) {
+      // パートナーの共有URLで開いた
+      setShareId(urlShareId);
+      setIsShared(true);
+      loadFromSupabase(urlShareId).then(() => setLoaded(true));
+    } else {
+      // 自分のセッション
+      let id = localStorage.getItem(LOCAL_SHARE_KEY);
+      if (!id) {
+        id = generateId();
+        localStorage.setItem(LOCAL_SHARE_KEY, id);
+      }
+      setShareId(id);
+      setIsShared(false);
+
+      // Supabaseから読み込み（なければlocalStorageから）
+      loadFromSupabase(id).then(() => {
+        // Supabaseにデータがなかった場合はlocalStorageの値を使う
+        try {
+          const savedPersona = localStorage.getItem("kosodate_checklist_persona");
+          const savedChecked = localStorage.getItem("kosodate_checklist_checked");
+          const savedDate = localStorage.getItem("kosodate_moving_date");
+          if (savedPersona) setSelectedPersonaId((prev) => prev ?? savedPersona);
+          if (savedChecked) setCheckedItems((prev) => prev.size > 0 ? prev : new Set(JSON.parse(savedChecked)));
+          if (savedDate) setMovingDateStr((prev) => prev || savedDate);
+        } catch {}
+        setLoaded(true);
+      });
+    }
+  }, [loadFromSupabase]);
 
   const handlePersonaSelect = useCallback((personaId: string) => {
     setSelectedPersonaId(personaId);
-    try { localStorage.setItem(PERSONA_KEY, personaId); } catch {}
-  }, []);
+    try { localStorage.setItem("kosodate_checklist_persona", personaId); } catch {}
+    if (shareId) saveToSupabase(shareId, { persona_id: personaId });
+  }, [shareId, saveToSupabase]);
 
   const handleToggle = useCallback((itemId: string) => {
     setCheckedItems((prev) => {
       const next = new Set(prev);
       if (next.has(itemId)) { next.delete(itemId); } else { next.add(itemId); }
-      try { localStorage.setItem(CHECKED_KEY, JSON.stringify([...next])); } catch {}
+      try { localStorage.setItem("kosodate_checklist_checked", JSON.stringify([...next])); } catch {}
+      if (shareId) saveToSupabase(shareId, { checked_items: [...next] });
       return next;
     });
-  }, []);
+  }, [shareId, saveToSupabase]);
+
+  const handleMovingDateChange = useCallback((value: string) => {
+    setMovingDateStr(value);
+    try { localStorage.setItem("kosodate_moving_date", value); } catch {}
+    if (shareId) saveToSupabase(shareId, { moving_date: value });
+  }, [shareId, saveToSupabase]);
 
   const handleReset = useCallback(() => {
     if (!window.confirm("チェックをすべてリセットしますか？")) return;
     setCheckedItems(new Set());
-    try { localStorage.removeItem(CHECKED_KEY); } catch {}
-  }, []);
+    try { localStorage.removeItem("kosodate_checklist_checked"); } catch {}
+    if (shareId) saveToSupabase(shareId, { checked_items: [] });
+  }, [shareId, saveToSupabase]);
 
-  const handleMovingDateChange = useCallback((value: string) => {
-    setMovingDateStr(value);
-    try { localStorage.setItem(MOVING_DATE_KEY, value); } catch {}
-  }, []);
+  const handleShare = useCallback(async () => {
+    if (!shareId) return;
+    // まず現在の状態をSupabaseに保存
+    await saveToSupabase(shareId, {
+      persona_id: selectedPersonaId,
+      checked_items: [...checkedItems],
+      moving_date: movingDateStr,
+    });
+    const url = `${window.location.origin}${window.location.pathname}?share=${shareId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 3000);
+    } catch {
+      prompt("このURLをパートナーに送ってください:", url);
+    }
+  }, [shareId, saveToSupabase, selectedPersonaId, checkedItems, movingDateStr]);
 
   const movingDate = movingDateStr ? new Date(movingDateStr) : null;
-
   const selectedPersona = checklist.personas.find((p) => p.id === selectedPersonaId);
   const totalItems = selectedPersona
     ? selectedPersona.sections.reduce((sum, s) => sum + s.items.length, 0) : 0;
@@ -99,10 +182,28 @@ export default function ChecklistClient({
     <div className="space-y-4 p-4">
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
-        <h2 className="text-base font-bold mb-1">転入チェックリスト</h2>
-        <p className="text-xs text-green-200">
-          {municipalityName}に転入したらやること。転入日を入力するとカウントダウン表示されます。
-        </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-base font-bold mb-1">転入チェックリスト</h2>
+            <p className="text-xs text-green-200">
+              {municipalityName}に転入したらやること。転入日を入力するとカウントダウン表示されます。
+            </p>
+          </div>
+        </div>
+
+        {/* 共有バナー */}
+        {isShared ? (
+          <div className="mt-3 bg-white/20 rounded-lg px-3 py-2 text-xs text-green-100">
+            👥 パートナーと共有中のリストです
+          </div>
+        ) : (
+          <button
+            onClick={handleShare}
+            className="mt-3 w-full bg-white/20 hover:bg-white/30 rounded-lg px-3 py-2 text-xs text-white font-semibold flex items-center justify-center gap-2 transition-all"
+          >
+            {isCopied ? "✅ URLをコピーしました！" : "👫 パートナーと共有する"}
+          </button>
+        )}
       </div>
 
       {/* 転入日入力 */}
@@ -217,7 +318,7 @@ export default function ChecklistClient({
         <ul className="space-y-1 text-yellow-600">
           <li>・ 手続きの期限・内容は変更されることがあります。</li>
           <li>・ 詳細は各窓口に直接ご確認ください。</li>
-          <li>・ チェック状態・転入日はこのスマホに保存されます。</li>
+          <li>・ チェック状態はクラウドに保存され共有URLで同期されます。</li>
         </ul>
       </div>
     </div>
@@ -244,7 +345,6 @@ function ChecklistItemCard({
   };
   const badge = urgencyBadge[item.urgency];
 
-  // カウントダウン計算
   let countdownBadge: { label: string; bg: string; text: string } | null = null;
   let deadlineDateStr: string | null = null;
 
@@ -272,7 +372,6 @@ function ChecklistItemCard({
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* チェックボックス */}
         <div
           className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 transition-all ${
             checked ? "border-gray-300 bg-gray-200" : "border-gray-300"
@@ -282,7 +381,6 @@ function ChecklistItemCard({
           {checked && <span className="text-gray-400 text-xs">✓</span>}
         </div>
 
-        {/* テキスト */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`text-sm font-medium ${checked ? "line-through text-gray-400" : "text-gray-800"}`}>
@@ -300,7 +398,6 @@ function ChecklistItemCard({
             )}
           </div>
 
-          {/* 期限表示 */}
           {(deadlineDateStr || item.deadline) && (
             <div className="flex items-center gap-1 mt-1">
               <span className="text-[10px] text-gray-400">🗓</span>
