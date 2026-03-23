@@ -271,7 +271,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
             )}
 
             {/* フッター */}
-            <div className="px-4 py-4 border-t border-gray-100">
+            <div className="px-4 py-4 border-t border-gray-100 space-y-3">
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
@@ -279,6 +279,24 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
               >
                 ← エリア選択に戻る
               </Link>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/about"
+                  onClick={() => setIsOpen(false)}
+                  className="text-xs text-gray-400 hover:text-gray-600 underline"
+                >
+                  このサービスについて
+                </Link>
+                <span className="text-gray-300">·</span>
+                <Link
+                  href="/privacy"
+                  onClick={() => setIsOpen(false)}
+                  className="text-xs text-gray-400 hover:text-gray-600 underline"
+                >
+                  プライバシーポリシー
+                </Link>
+              </div>
+              <p className="text-[10px] text-gray-300">運営: goodtaste.inc</p>
             </div>
           </div>
         </>

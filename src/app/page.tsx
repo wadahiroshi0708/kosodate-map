@@ -88,9 +88,14 @@ export default async function HomePage() {
       </div>
 
       {/* フッター */}
-      <footer className="mt-12 pb-8 text-center">
+      <footer className="mt-12 pb-8 text-center space-y-2">
+        <div className="flex items-center justify-center gap-3 text-xs text-gray-400">
+          <a href="/about" className="hover:text-gray-600 underline">このサービスについて</a>
+          <span>·</span>
+          <a href="/privacy" className="hover:text-gray-600 underline">プライバシーポリシー</a>
+        </div>
         <p className="text-xs text-gray-400">
-          &copy; 2026 こそだてマップ
+          &copy; 2026 こそだてマップ ｜ 運営: goodtaste.inc
         </p>
       </footer>
     </div>
