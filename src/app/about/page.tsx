@@ -83,10 +83,10 @@ export default function AboutPage() {
               <dt className="text-gray-400 flex-shrink-0 w-16">連絡先</dt>
               <dd>
                 <a
-                  href="mailto:contact@goodtaste.inc"
+                  href="mailto:goodtaste.soja@gmail.com"
                   className="text-[#2d9e6b] underline"
                 >
-                  contact@goodtaste.inc
+                  goodtaste.soja@gmail.com
                 </a>
               </dd>
             </div>

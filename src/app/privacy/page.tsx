@@ -86,10 +86,10 @@ export default function PrivacyPage() {
             <p>
               本ポリシーに関するご質問は
               <a
-                href="mailto:contact@goodtaste.inc"
+                href="mailto:goodtaste.soja@gmail.com"
                 className="text-[#2d9e6b] underline ml-1"
               >
-                contact@goodtaste.inc
+                goodtaste.soja@gmail.com
               </a>
               までご連絡ください。
             </p>
