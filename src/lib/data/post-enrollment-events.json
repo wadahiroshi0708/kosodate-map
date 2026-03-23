@@ -1,0 +1,158 @@
+{
+  "events": [
+    {
+      "id": "enrollment-ceremony",
+      "category": "行事",
+      "title": "入園式",
+      "note": "持ち物・服装を事前に確認。写真撮影の準備も忘れずに。",
+      "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "trial-care-early",
+      "category": "慣らし保育",
+      "title": "慣らし保育（前半）：お迎え 11:00〜11:30ごろ",
+      "note": "子どもの様子を保育士に確認しながら、お迎え時間を調整。",
+      "month_offset": 0,
+      "multi_child_note": "上の子の通常お迎えと時間が重なりやすい。担当を事前に分けておくと◎"
+    },
+    {
+      "id": "trial-care-mid",
+      "category": "慣らし保育",
+      "title": "慣らし保育（中盤）：給食後お迎え 13:00〜14:00ごろ",
+      "note": "給食を食べられるようになったか保育士に確認。",
+      "month_offset": 0,
+      "multi_child_note": "上の子の帰宅時間と重なる場合、家事と送迎の段取りを夫婦で確認。"
+    },
+    {
+      "id": "trial-care-late",
+      "category": "慣らし保育",
+      "title": "慣らし保育（後半）：通常保育へ移行",
+      "note": "保育士と相談のうえ、段階的に延長。個人差が大きい。",
+      "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "health-insurance-register",
+      "category": "手続き",
+      "title": "健康保険証を保育園に登録・コピー提出",
+      "note": "入園時書類の一つ。提出漏れが多いので確認を。",
+      "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "contact-app-register",
+      "category": "手続き",
+      "title": "連絡帳アプリの登録（保育園指定のアプリ）",
+      "note": "kirala・HoiClueなど保育園によって異なる。両親ともに登録を。",
+      "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "fever-contact-check",
+      "category": "手続き",
+      "title": "発熱時の緊急連絡フローを夫婦で確認",
+      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。",
+      "month_offset": 0,
+      "multi_child_note": "複数の子が同時に発熱するケースも。優先順位を話し合っておく。"
+    },
+    {
+      "id": "sick-childcare-register",
+      "category": "手続き",
+      "title": "病児保育・ファミサポへの登録",
+      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。",
+      "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "return-from-leave",
+      "category": "復職準備",
+      "title": "育休復帰の会社手続き（社会保険・育休手当の終了連絡）",
+      "note": "復職2週間前には人事へ連絡。社会保険料の再開タイミングを確認。",
+      "month_offset": 1,
+      "multi_child_note": null,
+      "for_leave_only": true
+    },
+    {
+      "id": "short-work-apply",
+      "category": "復職準備",
+      "title": "時短勤務・フレックス申請",
+      "note": "お迎え時間に合わせた働き方を上司と相談。申請書類を確認。",
+      "month_offset": 1,
+      "multi_child_note": null,
+      "for_leave_only": true
+    },
+    {
+      "id": "tuition-debit",
+      "category": "手続き",
+      "title": "保育料の口座振替設定を確認",
+      "note": "初回引き落としの前月末までに手続きが必要なケースが多い。",
+      "month_offset": 1,
+      "multi_child_note": null
+    },
+    {
+      "id": "parents-meeting",
+      "category": "行事",
+      "title": "保護者会（全体）",
+      "note": "入園後最初の保護者会。役員選出が行われることが多い。",
+      "month_offset": 1,
+      "multi_child_note": "上の子の行事と重なる場合あり。夫婦どちらが参加するか確認。"
+    },
+    {
+      "id": "room-parent-election",
+      "category": "行事",
+      "title": "役員選出への対応",
+      "note": "新入園クラスは対象になりやすい。夫婦で方針を決めておく。",
+      "month_offset": 1,
+      "multi_child_note": null
+    },
+    {
+      "id": "physical-checkup",
+      "category": "行事",
+      "title": "身体測定・健康診断（園内）",
+      "note": "年数回実施。結果票を受け取って保管を。",
+      "month_offset": 2,
+      "multi_child_note": null
+    },
+    {
+      "id": "sports-day",
+      "category": "行事",
+      "title": "運動会（秋）",
+      "note": "土曜開催が多い。有給取得・祖父母への連絡を早めに調整。",
+      "month_offset": 6,
+      "multi_child_note": "複数の子が別の保育園の場合、開催日が重なる可能性あり。"
+    },
+    {
+      "id": "individual-meeting",
+      "category": "行事",
+      "title": "個人面談",
+      "note": "保育士と子どもの様子を共有。平日昼間が多いため有給調整が必要なことも。",
+      "month_offset": 6,
+      "multi_child_note": null
+    },
+    {
+      "id": "recital",
+      "category": "行事",
+      "title": "生活発表会（冬）",
+      "note": "子どもの練習成果を見る場。早めに有給申請を。",
+      "month_offset": 9,
+      "multi_child_note": null
+    },
+    {
+      "id": "next-year-enrollment-apply",
+      "category": "年次更新",
+      "title": "翌年度継続入所申請",
+      "note": "11〜12月が申請期間のことが多い。忘れると翌年の入所が保証されない。",
+      "month_offset": 8,
+      "multi_child_note": null
+    },
+    {
+      "id": "next-year-enrollment-confirm",
+      "category": "年次更新",
+      "title": "翌年度継続入所の確定通知を確認",
+      "note": "2〜3月に通知が届く。状況変化（就労証明の更新等）も確認。",
+      "month_offset": 11,
+      "multi_child_note": null
+    }
+  ]
+}

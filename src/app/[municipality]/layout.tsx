@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { dataRepository } from "@/lib/data/json-adapter";
 import AppHeader from "@/components/layout/AppHeader";
 import AnalyticsProvider from "@/components/providers/AnalyticsProvider";
+import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
 import type { Metadata } from "next";
 
 interface MunicipalityLayoutProps {
@@ -95,7 +96,12 @@ export default async function MunicipalityLayout({
           municipalityName={municipality.name_ja}
           municipalityId={municipalityId}
         />
-        <main className="max-w-lg mx-auto">{children}</main>
+        <OnboardingWrapper
+          municipalityId={municipalityId}
+          municipalityName={municipality.name_ja}
+        >
+          <main className="max-w-lg mx-auto">{children}</main>
+        </OnboardingWrapper>
       </div>
     </AnalyticsProvider>
   );

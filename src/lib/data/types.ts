@@ -293,6 +293,40 @@ export interface MunicipalityCommunity {
   links: CommunityLink[];
 }
 
+// ===================================
+// 入園後タイムライン
+// ===================================
+
+/** 担当者 */
+export type EventAssignee = "mother" | "father" | "both" | null;
+
+/** 入園後イベントのカテゴリ */
+export type PostEnrollmentCategory =
+  | "慣らし保育"
+  | "行事"
+  | "手続き"
+  | "年次更新"
+  | "復職準備";
+
+/** 入園後イベント（テンプレート） */
+export interface PostEnrollmentEvent {
+  id: string;
+  category: PostEnrollmentCategory;
+  title: string;
+  note: string | null;
+  /** 入園月を0としたときの相対月数（0=入園月、1=翌月…） */
+  month_offset: number;
+  /** 複数子がいる場合の注意書き */
+  multi_child_note: string | null;
+  /** 育休中の場合にのみ表示 */
+  for_leave_only?: boolean;
+}
+
+/** 入園後タイムライン全体（テンプレート） */
+export interface PostEnrollmentTimeline {
+  events: PostEnrollmentEvent[];
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

@@ -13,13 +13,23 @@ interface AppHeaderProps {
 
 const NAV_ITEMS = [
   {
+    tab: "home",
+    icon: "🏠",
+    title: "ホーム",
+    description: "今やることを確認する",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}`,
+    type: "page",
+  },
+  {
     tab: "nursery",
     icon: "🏫",
     title: "保育施設",
     description: "認可保育所・こども園の空き状況と距離ランキング",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
-    href: (municipalityId: string) => `/${municipalityId}`,
+    href: (municipalityId: string) => `/${municipalityId}?tab=nursery`,
     type: "tab",
   },
   {
@@ -108,12 +118,21 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
   const isFaqPage        = pathname?.endsWith("/faq")         ?? false;
 
+  const isHomePage =
+    !isChecklistPage &&
+    !isShopsPage &&
+    !isGiveawayPage &&
+    !isCommunityPage &&
+    !isFaqPage &&
+    !searchParams.get("tab");
+
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
     if (isShopsPage)     return item.tab === "shops";
     if (isGiveawayPage)  return item.tab === "giveaway";
     if (isCommunityPage) return item.tab === "community";
     if (isFaqPage)       return item.tab === "faq";
+    if (isHomePage)      return item.tab === "home";
     return item.type === "tab" && activeTab === item.tab;
   };
 
